@@ -28,7 +28,7 @@
 # ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 
-from mesh.access import Model, Opcode, AccessStatus
+from mesh.access import Model, Opcode
 from models.common import TransitionTime
 import struct
 import time
@@ -73,7 +73,6 @@ class GenericOnOffClient(Model):
                 i -= 1
 
     def get(self):
-        AccessStatus.setTTL(20)
         self.send(self.GENERIC_ON_OFF_GET)
         self.logger.info("Get Light On Off Status")
 
