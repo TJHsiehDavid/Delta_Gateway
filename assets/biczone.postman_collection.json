@@ -1,0 +1,1430 @@
+{
+	"info": {
+		"_postman_id": "62b5814c-926b-4c6c-897f-8585d753dcf6",
+		"name": "biczone",
+		"description": "Bic",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "API Doc Html",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "text/plain"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://172.16.0.95:8877/v1",
+					"protocol": "http",
+					"host": [
+						"172",
+						"16",
+						"0",
+						"95"
+					],
+					"port": "8877",
+					"path": [
+						"v1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "API Version",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://172.16.0.95:8877/v1/version",
+					"protocol": "http",
+					"host": [
+						"172",
+						"16",
+						"0",
+						"95"
+					],
+					"port": "8877",
+					"path": [
+						"v1",
+						"version"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Mesh Network Info 藍芽 Mesh 網路資訊",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://172.16.0.95:8877/v1/mesh",
+					"protocol": "http",
+					"host": [
+						"172",
+						"16",
+						"0",
+						"95"
+					],
+					"port": "8877",
+					"path": [
+						"v1",
+						"mesh"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Export Mesh Network 獲取匯出配置文件",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://172.16.0.95:8877/v1/mesh/export",
+					"protocol": "http",
+					"host": [
+						"172",
+						"16",
+						"0",
+						"95"
+					],
+					"port": "8877",
+					"path": [
+						"v1",
+						"mesh",
+						"export"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Import Mesh Network 寫入匯出配置文件",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"MeshInfo\": {\n        \"provisionedData\": {\n            \"$schema\": \"http://json-schema.org/draft-04/schema#\",\n            \"id\": \"TBD\",\n            \"version\": \"1.0\",\n            \"meshUUID\": \"D02B8860-772F-4D14-B160-3342356C92B6\",\n            \"meshName\": \"BIC\",\n            \"nextUnicast\": \"0008\",\n            \"timestamp\": \"286cb2ce\",\n            \"provisioners\": [\n                {\n                    \"provisionerName\": \"nRF Mesh Provisioner\",\n                    \"provisionerAddress\": \"7FFE\",\n                    \"UUID\": \"3A9A5A3D-8BAD-4E45-AF22-AE7FA99BFBD5\",\n                    \"allocatedUnicastRange\": [\n                        {\n                            \"lowAddress\": \"0001\",\n                            \"highAddress\": \"7FFF\"\n                        }\n                    ]\n                }\n            ],\n            \"netKeys\": [\n                {\n                    \"name\": \"Network Key\",\n                    \"index\": 0,\n                    \"key\": \"4C53425545617379436F6E664D00F50C\",\n                    \"phase\": 0,\n                    \"minSecurity\": 1,\n                    \"timestamp\": \"0\"\n                }\n            ],\n            \"appKeys\": [\n                {\n                    \"name\": \"Application Key\",\n                    \"index\": 0,\n                    \"boundNetKey\": 0,\n                    \"key\": \"4C53425545617379436F6E6669675357\"\n                }\n            ],\n            \"nodes\": [\n                {\n                    \"UUID\": \"da0b9cdf-4d5a-3531-4a49-ef78a7f32507\",\n                    \"deviceKey\": \"4C53425545617379436F6E6669675357\",\n                    \"unicastAddress\": \"0004\",\n                    \"security\": \"low\",\n                    \"netKeys\": [\n                        {\n                            \"index\": 0\n                        }\n                    ],\n                    \"configComplete\": true,\n                    \"name\": \"DT6\",\n                    \"cid\": \"069E\",\n                    \"pid\": \"0001\",\n                    \"vid\": \"0001\",\n                    \"ttl\": 5,\n                    \"appKeys\": [\n                        {\n                            \"index\": \"0000\"\n                        }\n                    ],\n                    \"elements\": [\n                        {\n                            \"index\": 0,\n                            \"location\": \"0000\",\n                            \"models\": [\n                                {\n                                    \"modelId\": \"0000\",\n                                    \"bind\": [\n                                        \"0000\"\n                                    ]\n                                },\n                                {\n                                    \"modelId\": \"0002\",\n                                    \"subscribe\": [\n                                        \"C000\"\n                                    ],\n                                    \"bind\": [\n                                        \"0000\"\n                                    ]\n                                },\n                                {\n                                    \"modelId\": \"1000\",\n                                    \"subscribe\": [\n                                        \"C000\"\n                                    ],\n                                    \"bind\": [\n                                        \"0000\"\n                                    ]\n                                },\n                                {\n                                    \"modelId\": \"1001\",\n                                    \"bind\": [\n                                        \"0000\"\n                                    ]\n                                },\n                                {\n                                    \"modelId\": \"1002\",\n                                    \"subscribe\": [\n                                        \"C000\"\n                                    ],\n                                    \"bind\": [\n                                        \"0000\"\n                                    ]\n                                },\n                                {\n                                    \"modelId\": \"1003\",\n                                    \"bind\": [\n                                        \"0000\"\n                                    ]\n                                },\n                                {\n                                    \"modelId\": \"1004\",\n                                    \"subscribe\": [\n                                        \"C000\"\n                                    ],\n                                    \"bind\": [\n                                        \"0000\"\n                                    ]\n                                },\n                                {\n                                    \"modelId\": \"1006\",\n                                    \"subscribe\": [\n                                        \"C000\"\n                                    ],\n                                    \"bind\": [\n                                        \"0000\"\n                                    ]\n                                },\n                                {\n                                    \"modelId\": \"1007\",\n                                    \"subscribe\": [\n                                        \"C000\"\n                                    ],\n                                    \"bind\": [\n                                        \"0000\"\n                                    ]\n                                },\n                                {\n                                    \"modelId\": \"1100\",\n                                    \"bind\": [\n                                        \"0000\"\n                                    ]\n                                },\n                                {\n                                    \"modelId\": \"1101\",\n                                    \"bind\": [\n                                        \"0000\"\n                                    ]\n                                },\n                                {\n                                    \"modelId\": \"1102\",\n                                    \"bind\": [\n                                        \"0000\"\n                                    ]\n                                },\n                                {\n                                    \"modelId\": \"1200\",\n                                    \"bind\": [\n                                        \"0000\"\n                                    ]\n                                },\n                                {\n                                    \"modelId\": \"1201\",\n                                    \"bind\": [\n                                        \"0000\"\n                                    ]\n                                },\n                                {\n                                    \"modelId\": \"1203\",\n                                    \"subscribe\": [\n                                        \"C000\"\n                                    ],\n                                    \"bind\": [\n                                        \"0000\"\n                                    ]\n                                },\n                                {\n                                    \"modelId\": \"1204\",\n                                    \"subscribe\": [\n                                        \"C000\"\n                                    ],\n                                    \"bind\": [\n                                        \"0000\"\n                                    ]\n                                },\n                                {\n                                    \"modelId\": \"1205\",\n                                    \"publish\": {\n                                        \"address\": \"C000\",\n                                        \"index\": \"0000\",\n                                        \"ttl\": 255,\n                                        \"period\": 0,\n                                        \"retransmit\": {\n                                            \"count\": 1,\n                                            \"interval\": 1\n                                        },\n                                        \"credentials\": 0\n                                    },\n                                    \"bind\": [\n                                        \"0000\"\n                                    ]\n                                },\n                                {\n                                    \"modelId\": \"1206\",\n                                    \"subscribe\": [\n                                        \"C000\"\n                                    ],\n                                    \"bind\": [\n                                        \"0000\"\n                                    ]\n                                },\n                                {\n                                    \"modelId\": \"1207\",\n                                    \"subscribe\": [\n                                        \"C000\"\n                                    ],\n                                    \"bind\": [\n                                        \"0000\"\n                                    ]\n                                },\n                                {\n                                    \"modelId\": \"1300\",\n                                    \"subscribe\": [\n                                        \"C000\"\n                                    ],\n                                    \"bind\": [\n                                        \"0000\"\n                                    ]\n                                },\n                                {\n                                    \"modelId\": \"1301\",\n                                    \"subscribe\": [\n                                        \"C000\"\n                                    ],\n                                    \"bind\": [\n                                        \"0000\"\n                                    ]\n                                },\n                                {\n                                    \"modelId\": \"1303\",\n                                    \"subscribe\": [\n                                        \"C000\"\n                                    ],\n                                    \"bind\": [\n                                        \"0000\"\n                                    ]\n                                },\n                                {\n                                    \"modelId\": \"1304\",\n                                    \"subscribe\": [\n                                        \"C000\"\n                                    ],\n                                    \"bind\": [\n                                        \"0000\"\n                                    ]\n                                },\n                                {\n                                    \"modelId\": \"069E0001\",\n                                    \"subscribe\": [\n                                        \"C000\"\n                                    ],\n                                    \"bind\": [\n                                        \"0000\"\n                                    ]\n                                }\n                            ]\n                        },\n                        {\n                            \"index\": 1,\n                            \"location\": \"0000\",\n                            \"models\": [\n                                {\n                                    \"modelId\": \"1002\",\n                                    \"bind\": [\n                                        \"0000\"\n                                    ]\n                                },\n                                {\n                                    \"modelId\": \"1205\",\n                                    \"publish\": {\n                                        \"address\": \"C001\",\n                                        \"index\": \"0000\",\n                                        \"ttl\": 255,\n                                        \"period\": 0,\n                                        \"retransmit\": {\n                                            \"count\": 1,\n                                            \"interval\": 1\n                                        },\n                                        \"credentials\": 0\n                                    },\n                                    \"bind\": [\n                                        \"0000\"\n                                    ]\n                                },\n                                {\n                                    \"modelId\": \"1306\",\n                                    \"bind\": [\n                                        \"0000\"\n                                    ]\n                                }\n                            ]\n                        },\n                        {\n                            \"index\": 2,\n                            \"location\": \"0000\",\n                            \"models\": [\n                                {\n                                    \"modelId\": \"1000\",\n                                    \"subscribe\": [\n                                        \"C002\"\n                                    ],\n                                    \"bind\": [\n                                        \"0000\"\n                                    ]\n                                },\n                                {\n                                    \"modelId\": \"1203\",\n                                    \"bind\": [\n                                        \"0000\"\n                                    ]\n                                },\n                                {\n                                    \"modelId\": \"1204\",\n                                    \"bind\": [\n                                        \"0000\"\n                                    ]\n                                },\n                                {\n                                    \"modelId\": \"1206\",\n                                    \"bind\": [\n                                        \"0000\"\n                                    ]\n                                },\n                                {\n                                    \"modelId\": \"1207\",\n                                    \"bind\": [\n                                        \"0000\"\n                                    ]\n                                },\n                                {\n                                    \"modelId\": \"130F\",\n                                    \"bind\": [\n                                        \"0000\"\n                                    ]\n                                },\n                                {\n                                    \"modelId\": \"1310\",\n                                    \"bind\": [\n                                        \"0000\"\n                                    ]\n                                }\n                            ]\n                        }\n                    ],\n                    \"blacklisted\": false\n                }\n            ]\n        },\n        \"networkSetupData\": {\n            \"proxyState\": {},\n            \"ttl\": {\n                \"globalSet\": 10,\n                \"global\": 5\n            }\n        },\n        \"groupInfoData\": [\n            {\n                \"id\": 1,\n                \"data\": {\n                    \"bindSenserDeviceID\": 0,\n                    \"bindSensorElementIndex\": 0,\n                    \"colorAddress\": 49169,\n                    \"colorSceneAddr\": 49169,\n                    \"colorSceneSetupAddr\": 49169,\n                    \"colorValue\": 0,\n                    \"dimmingValue\": 0,\n                    \"groupDescription\": \"0\",\n                    \"id\": 1,\n                    \"isSelect\": false,\n                    \"lightAddress\": 49168,\n                    \"lightSceneAddr\": 49168,\n                    \"lightSceneSetupAddr\": 49168,\n                    \"maxNodeAddress\": 0,\n                    \"meshState\": 0,\n                    \"name\": \"G1\",\n                    \"onOffAddress\": 49168,\n                    \"publishAddress\": 49170,\n                    \"switchState\": false,\n                    \"turnOn\": 0,\n                    \"unicastAddress\": 49168,\n                    \"usedState\": 1\n                }\n            }\n        ],\n        \"groupChildNodeData\": [\n            {\n                \"id\": 1,\n                \"data\": {\n                    \"groupID\": 1,\n                    \"id\": 1,\n                    \"unicastAddress\": 4\n                }\n            }\n        ],\n        \"deviceInfoData\": [\n            {\n                \"id\": 1,\n                \"data\": {\n                    \"id\": 1,\n                    \"name\": \"DT6_1\",\n                    \"defaultName\": \"DT6\",\n                    \"uuid\": \"da0b9cdf-4d5a-3531-4a49-ef78a7f32507\",\n                    \"unicastAddress\": 4,\n                    \"switchState\": 0,\n                    \"uploadState\": 0,\n                    \"dimmingValue\": 0,\n                    \"colorValue\": 0,\n                    \"photo\": \"icon_down_light\",\n                    \"deivceKey\": \"DA0B9CDF4D5A3531\",\n                    \"sensorClientGroupAddress\": 0,\n                    \"sensorUseType\": 1,\n                    \"deviceDescription\": \"0\",\n                    \"rssi\": 0,\n                    \"action\": false,\n                    \"meshState\": 0,\n                    \"type\": 0,\n                    \"x\": 0,\n                    \"y\": 0\n                }\n            }\n        ],\n        \"sceneMainData\": [\n            {\n                \"id\": 1,\n                \"data\": {\n                    \"id\": 1,\n                    \"sceneDescription\": \"0\",\n                    \"sceneName\": \"S1\",\n                    \"sceneNum\": 1,\n                    \"scenePhoto\": \"\",\n                    \"sceneType\": 1\n                }\n            }\n        ],\n        \"sceneGroupDetailData\": [\n            {\n                \"id\": 1,\n                \"data\": {\n                    \"colorTransSteps\": 5,\n                    \"colorTransTime\": 0,\n                    \"colorValue\": 0,\n                    \"dimmingTransSteps\": 5,\n                    \"dimmingTransTime\": 0,\n                    \"dimmingValue\": 0,\n                    \"groupAddress\": 49168,\n                    \"id\": 1,\n                    \"onOffState\": 0,\n                    \"sceneNum\": 1,\n                    \"switchState\": false\n                }\n            }\n        ],\n        \"sceneSingleDetailData\": [\n            {\n                \"id\": 1,\n                \"data\": {\n                    \"colorTransSteps\": 5,\n                    \"colorTransTime\": 0,\n                    \"colorValue\": 0,\n                    \"dimmingTransSteps\": 5,\n                    \"dimmingTransTime\": 0,\n                    \"dimmingValue\": 255,\n                    \"groupAddress\": 49168,\n                    \"id\": 1,\n                    \"onOffState\": 0,\n                    \"sceneNum\": 1,\n                    \"singleAddress\": 4,\n                    \"switchState\": false\n                }\n            },\n            {\n                \"id\": 2,\n                \"data\": {\n                    \"colorTransSteps\": 5,\n                    \"colorTransTime\": 0,\n                    \"colorValue\": 0,\n                    \"dimmingTransSteps\": 5,\n                    \"dimmingTransTime\": 0,\n                    \"dimmingValue\": 255,\n                    \"groupAddress\": 0,\n                    \"id\": 2,\n                    \"onOffState\": 0,\n                    \"sceneNum\": 1,\n                    \"singleAddress\": 4,\n                    \"switchState\": false\n                }\n            }\n        ],\n        \"sceneScheduleData\": [\n            {\n                \"id\": 1,\n                \"data\": {\n                    \"action\": 2,\n                    \"id\": 1,\n                    \"repeatWeekly\": \"0111111\",\n                    \"sceneNum\": 1,\n                    \"scheduleName\": \"SC1\",\n                    \"startTime\": \"12:00\"\n                }\n            }\n        ],\n        \"sceneScheduleDetailData\": [\n            {\n                \"id\": 1,\n                \"data\": {\n                    \"action\": 2,\n                    \"groupAddress\": 0,\n                    \"id\": 1,\n                    \"sceneNum\": 1,\n                    \"scheduleId\": 1,\n                    \"scheduleNum\": 0,\n                    \"singleAddress\": 4\n                }\n            }\n        ],\n        \"timerInfoData\": {\n            \"mains\": [],\n            \"details\": [],\n            \"indexs\": []\n        },\n        \"sceneListStatusData\": [],\n        \"sceneListMainData\": [],\n        \"sceneListDetailData\": [],\n        \"publicationData\": [],\n        \"envData\": {\n            \"verticalMarket\": \"\"\n        }\n    }\n}"
+				},
+				"url": {
+					"raw": "http://172.16.0.95:8877/v1/mesh/import",
+					"protocol": "http",
+					"host": [
+						"172",
+						"16",
+						"0",
+						"95"
+					],
+					"port": "8877",
+					"path": [
+						"v1",
+						"mesh",
+						"import"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Reset Mesh Network 重置網路下所有設備及參數",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://172.16.0.95:8877/v1/mesh/reset",
+					"protocol": "http",
+					"host": [
+						"172",
+						"16",
+						"0",
+						"95"
+					],
+					"port": "8877",
+					"path": [
+						"v1",
+						"mesh",
+						"reset"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Scan unprovisioned devices 查詢尚未配對裝置",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://172.16.0.95:8877/v1/mesh/scan",
+					"protocol": "http",
+					"host": [
+						"172",
+						"16",
+						"0",
+						"95"
+					],
+					"port": "8877",
+					"path": [
+						"v1",
+						"mesh",
+						"scan"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Query provisioned devices 查詢可控制裝置",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://172.16.0.95:8877/v1/device",
+					"protocol": "http",
+					"host": [
+						"172",
+						"16",
+						"0",
+						"95"
+					],
+					"port": "8877",
+					"path": [
+						"v1",
+						"device"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Query provisioned devices(w/ device uuid) 查詢可控制裝置(輸入設備uuid)",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://172.16.0.95:8877/v1/device/uuid/da0b9cdf-4d5a-3531-4a49-ef78a7f32501",
+					"protocol": "http",
+					"host": [
+						"172",
+						"16",
+						"0",
+						"95"
+					],
+					"port": "8877",
+					"path": [
+						"v1",
+						"device",
+						"uuid",
+						"da0b9cdf-4d5a-3531-4a49-ef78a7f32501"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Query provisioned devices(w/ device unicast address) 查詢可控制裝置(輸入設備unicast address)",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://172.16.0.95:8877/v1/device/uniAddress/4",
+					"protocol": "http",
+					"host": [
+						"172",
+						"16",
+						"0",
+						"95"
+					],
+					"port": "8877",
+					"path": [
+						"v1",
+						"device",
+						"uniAddress",
+						"4"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Query provisioned devices(w/ device id) 查詢可控制裝置(輸入設備device id)",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://172.16.0.95:8877/v1/device/id/1",
+					"protocol": "http",
+					"host": [
+						"172",
+						"16",
+						"0",
+						"95"
+					],
+					"port": "8877",
+					"path": [
+						"v1",
+						"device",
+						"id",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Query device status(w/ device uuid) 查詢裝置狀態(輸入設備uuid)",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://172.16.0.95:8877/v1/device/realtime/uuid/24219b10-e7cf-93cc-6cb6-e7c906b22507",
+					"protocol": "http",
+					"host": [
+						"172",
+						"16",
+						"0",
+						"95"
+					],
+					"port": "8877",
+					"path": [
+						"v1",
+						"device",
+						"realtime",
+						"uuid",
+						"24219b10-e7cf-93cc-6cb6-e7c906b22507"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Query device status(w/ device unicast address) 查詢裝置狀態(輸入設備unicast address)",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://172.16.0.95:8877/v1/device/realtime/uniAddress/4",
+					"protocol": "http",
+					"host": [
+						"172",
+						"16",
+						"0",
+						"95"
+					],
+					"port": "8877",
+					"path": [
+						"v1",
+						"device",
+						"realtime",
+						"uniAddress",
+						"4"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Query device status(w/ device id) 查詢裝置狀態(輸入設備device id)",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://172.16.0.95:8877/v1/device/realtime/id/1",
+					"protocol": "http",
+					"host": [
+						"172",
+						"16",
+						"0",
+						"95"
+					],
+					"port": "8877",
+					"path": [
+						"v1",
+						"device",
+						"realtime",
+						"id",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Identify device(w/ device uuid) 設置裝置ID燈閃爍(輸入設備uuid)",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://172.16.0.95:8877/v1/device/uuid/da0b9cdf-4d5a-3531-4a49-ef78a7f32501/ping",
+					"protocol": "http",
+					"host": [
+						"172",
+						"16",
+						"0",
+						"95"
+					],
+					"port": "8877",
+					"path": [
+						"v1",
+						"device",
+						"uuid",
+						"da0b9cdf-4d5a-3531-4a49-ef78a7f32501",
+						"ping"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Identify device(w/ device unicast address) 設置裝置ID燈閃爍(輸入設備unicast address)",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://172.16.0.95:8877/v1/device/uniAddress/28/ping",
+					"protocol": "http",
+					"host": [
+						"172",
+						"16",
+						"0",
+						"95"
+					],
+					"port": "8877",
+					"path": [
+						"v1",
+						"device",
+						"uniAddress",
+						"28",
+						"ping"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Identify device(w/ device id) 設置裝置ID燈閃爍(輸入設備id)",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://172.16.0.95:8877/v1/device/id/1/ping",
+					"protocol": "http",
+					"host": [
+						"172",
+						"16",
+						"0",
+						"95"
+					],
+					"port": "8877",
+					"path": [
+						"v1",
+						"device",
+						"id",
+						"1",
+						"ping"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add device to mesh network 將裝置加入 Mesh 網路",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"devices\": [\n        {\n            \"deviceDescription\": \"\",\n            \"rssi\": -57,\n            \"uuid\": \"da0b9cdf-4d5a-3531-4a49-ef78a7f32501\",\n            \"meshState\": 0,\n            \"sensorClientGroupAddress\": 0,\n            \"defaultName\": \"DT6\"\n        },\n        {\n            \"deviceDescription\": \"\",\n            \"rssi\": -74,\n            \"uuid\": \"68b542e0-244b-045c-4460-fa2687d22501\",\n            \"meshState\": 0,\n            \"sensorClientGroupAddress\": 0,\n            \"defaultName\": \"DT8\"\n        }\n    ]\n}",
+					"options": {
+						"raw": {
+							"language": "text"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://172.16.0.95:8877/v1/device",
+					"protocol": "http",
+					"host": [
+						"172",
+						"16",
+						"0",
+						"95"
+					],
+					"port": "8877",
+					"path": [
+						"v1",
+						"device"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Remove device from mesh network 將裝置從 Mesh 網路移除",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"devices\": [\n        {\n            \"id\": 1,\n            \"uniAddress\": 4,\n            \"deviceDescription\": \"\",\n            \"rssi\": -57,\n            \"uuid\": \"da0b9cdf-4d5a-3531-4a49-ef78a7f32501\",\n            \"meshState\": 0,\n            \"sensorClientGroupAddress\": 0,\n            \"defaultName\": \"DT6\"\n        },\n        {\n            \"id\": 2,\n            \"uniAddress\": 8,\n            \"deviceDescription\": \"\",\n            \"rssi\": -74,\n            \"uuid\": \"68b542e0-244b-045c-4460-fa2687d22501\",\n            \"meshState\": 0,\n            \"sensorClientGroupAddress\": 0,\n            \"defaultName\": \"DT8\"\n        }\n    ]\n}"
+				},
+				"url": {
+					"raw": "http://172.16.0.95:8877/v1/device",
+					"protocol": "http",
+					"host": [
+						"172",
+						"16",
+						"0",
+						"95"
+					],
+					"port": "8877",
+					"path": [
+						"v1",
+						"device"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Control device On/Off 控製裝置開關",
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"device\": {\n        \"id\": 1,\n        \"uniAddress\": 4,\n        \"state\": {\n            \"onOff\": 0\n        }\n    }\n}"
+				},
+				"url": {
+					"raw": "http://172.16.0.95:8877/v1/device",
+					"protocol": "http",
+					"host": [
+						"172",
+						"16",
+						"0",
+						"95"
+					],
+					"port": "8877",
+					"path": [
+						"v1",
+						"device"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Control device light level or cct level 控制裝置調光調色",
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"device\": {\n        \"id\": 1,\n        \"uniAddress\": 4,\n        \"state\": {\n            \"level\": 100\n        }\n    }\n}"
+				},
+				"url": {
+					"raw": "http://172.16.0.95:8877/v1/device",
+					"protocol": "http",
+					"host": [
+						"172",
+						"16",
+						"0",
+						"95"
+					],
+					"port": "8877",
+					"path": [
+						"v1",
+						"device"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Query device light Output 查詢裝置Output",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://172.16.0.95:8877/v1/device/uniAddress/4/output",
+					"protocol": "http",
+					"host": [
+						"172",
+						"16",
+						"0",
+						"95"
+					],
+					"port": "8877",
+					"path": [
+						"v1",
+						"device",
+						"uniAddress",
+						"4",
+						"output"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Control device light Output 控制裝置Output",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://172.16.0.95:8877/v1/device/uniAddress/4/output/log",
+					"protocol": "http",
+					"host": [
+						"172",
+						"16",
+						"0",
+						"95"
+					],
+					"port": "8877",
+					"path": [
+						"v1",
+						"device",
+						"uniAddress",
+						"4",
+						"output",
+						"log"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Query groups 查詢可控群組",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://172.16.0.95:8877/v1/group",
+					"protocol": "http",
+					"host": [
+						"172",
+						"16",
+						"0",
+						"95"
+					],
+					"port": "8877",
+					"path": [
+						"v1",
+						"group"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Query devices in group 查詢群組裡裝置",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://172.16.0.95:8877/v1/group?id=1",
+					"protocol": "http",
+					"host": [
+						"172",
+						"16",
+						"0",
+						"95"
+					],
+					"port": "8877",
+					"path": [
+						"v1",
+						"group"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "New group 新增群組",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\": 0,\n    \"name\": \"WebG2\",\n    \"newDevices\": [\n        {\n            \"uniAddress\": 4\n        },\n        {\n            \"uniAddress\": 8\n        }\n    ]\n}"
+				},
+				"url": {
+					"raw": "http://172.16.0.95:8877/v1/group",
+					"protocol": "http",
+					"host": [
+						"172",
+						"16",
+						"0",
+						"95"
+					],
+					"port": "8877",
+					"path": [
+						"v1",
+						"group"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Edit group 編輯群組",
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\": 3,\n    \"name\": \"WebG22\",\n    \"newDevices\": [],\n    \"delDevices\": [\n        {\n            \"uniAddress\": 8\n        }        \n    ]\n}"
+				},
+				"url": {
+					"raw": "http://172.16.0.95:8877/v1/group",
+					"protocol": "http",
+					"host": [
+						"172",
+						"16",
+						"0",
+						"95"
+					],
+					"port": "8877",
+					"path": [
+						"v1",
+						"group"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete group 刪除群組",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"group\": {\n        \"id\": 2,\n        \"uniAddress\": 49178\n    }\n}"
+				},
+				"url": {
+					"raw": "http://172.16.0.95:8877/v1/group",
+					"protocol": "http",
+					"host": [
+						"172",
+						"16",
+						"0",
+						"95"
+					],
+					"port": "8877",
+					"path": [
+						"v1",
+						"group"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Control group On/Off 控製裝置群組開關",
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"group\": {\n        \"id\": 1,\n        \"uniAddress\": 49168,\n        \"state\": {\n            \"onOff\": 1\n        }\n    }\n}"
+				},
+				"url": {
+					"raw": "http://172.16.0.95:8877/v1/group",
+					"protocol": "http",
+					"host": [
+						"172",
+						"16",
+						"0",
+						"95"
+					],
+					"port": "8877",
+					"path": [
+						"v1",
+						"group"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Control group light level or cct level 控制群組置調光調色",
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"group\": {\n        \"id\": 1,\n        \"uniAddress\": 49168,\n        \"state\": {\n            \"level\": 100\n        }\n    }\n}"
+				},
+				"url": {
+					"raw": "http://172.16.0.95:8877/v1/group",
+					"protocol": "http",
+					"host": [
+						"172",
+						"16",
+						"0",
+						"95"
+					],
+					"port": "8877",
+					"path": [
+						"v1",
+						"group"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Control group Output 控制群組Output",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://172.16.0.95:8877/v1/group/uniAddress/49168/output/log",
+					"protocol": "http",
+					"host": [
+						"172",
+						"16",
+						"0",
+						"95"
+					],
+					"port": "8877",
+					"path": [
+						"v1",
+						"group",
+						"uniAddress",
+						"49168",
+						"output",
+						"log"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Query scenes 查詢可控場景",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://172.16.0.95:8877/v1/scene",
+					"protocol": "http",
+					"host": [
+						"172",
+						"16",
+						"0",
+						"95"
+					],
+					"port": "8877",
+					"path": [
+						"v1",
+						"scene"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Recall scene 控製場景開關",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://172.16.0.95:8877/v1/scene/id/1/recall",
+					"protocol": "http",
+					"host": [
+						"172",
+						"16",
+						"0",
+						"95"
+					],
+					"port": "8877",
+					"path": [
+						"v1",
+						"scene",
+						"id",
+						"1",
+						"recall"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Query schedules 查詢已設定時程",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://172.16.0.95:8877/v1/schedule",
+					"protocol": "http",
+					"host": [
+						"172",
+						"16",
+						"0",
+						"95"
+					],
+					"port": "8877",
+					"path": [
+						"v1",
+						"schedule"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "New schedule 新增定時設定",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"schedule\": {\n        \"id\": 0,\n        \"name\": \"sch3\",\n        \"sceneNum\": 1,\n        \"startTime\": \"12:00\",\n        \"repeatWeekly\": \"1111111\"\n    }\n}"
+				},
+				"url": {
+					"raw": "http://172.16.0.95:8877/v1/schedule",
+					"protocol": "http",
+					"host": [
+						"172",
+						"16",
+						"0",
+						"95"
+					],
+					"port": "8877",
+					"path": [
+						"v1",
+						"schedule"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Edit schedule 編輯定時設定",
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"schedule\": {\n        \"id\": 1,\n        \"name\": \"Sch1\",\n        \"sceneNum\": 1,\n        \"startTime\": \"12:00\",\n        \"repeatWeekly\": \"0111110\"\n    }\n}"
+				},
+				"url": {
+					"raw": "http://172.16.0.95:8877/v1/schedule",
+					"protocol": "http",
+					"host": [
+						"172",
+						"16",
+						"0",
+						"95"
+					],
+					"port": "8877",
+					"path": [
+						"v1",
+						"schedule"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete schedule 刪除定時設定",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\": 4\n}"
+				},
+				"url": {
+					"raw": "http://172.16.0.95:8877/v1/schedule",
+					"protocol": "http",
+					"host": [
+						"172",
+						"16",
+						"0",
+						"95"
+					],
+					"port": "8877",
+					"path": [
+						"v1",
+						"schedule"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Query schedule setting 獲取定時設定資料",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{}"
+				},
+				"url": {
+					"raw": "http://172.16.0.95:8877/v1/schedule?id=1",
+					"protocol": "http",
+					"host": [
+						"172",
+						"16",
+						"0",
+						"95"
+					],
+					"port": "8877",
+					"path": [
+						"v1",
+						"schedule"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Sync Time 校正時間",
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"time\": {}\n}"
+				},
+				"url": {
+					"raw": "http://172.16.0.95:8877/v1/time",
+					"protocol": "http",
+					"host": [
+						"172",
+						"16",
+						"0",
+						"95"
+					],
+					"port": "8877",
+					"path": [
+						"v1",
+						"time"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

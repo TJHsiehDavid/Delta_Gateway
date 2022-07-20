@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BIC ZONE</title>
+</head>
+<script type="text/javascript">
+
+    var eventSource = new EventSource("/v2/beacon/stream");
+
+    eventSource.addEventListener('open', function(e) {
+        document.body.innerHTML += ('open: ' + e.data + '<br>');
+    }, false);
+
+    eventSource.addEventListener('message', function(e) {
+        document.body.innerHTML += ('message: ' + e.data + '<br>');
+    }, false);
+    
+</script>
+<body>
+    
+ </body>
+</html>

@@ -1,0 +1,1406 @@
+ <!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=utf-8">
+<title>BIC Web API Doc v2</title>
+</head>
+
+<body lang=ZH-TW style='tab-interval:36.0pt;word-wrap:break-word'>
+
+<div style="display:none;">
+<h1><a href="http://www.biczone.com:8088/v1/postman_collection.json" target="_blank"><span style='color:#1155CC'>
+download postman_collection.json (Collection v2.1)
+</span></a></h1>
+
+<hr size=0 width="100%" align=center>
+
+<h1><a href="http://www.biczone.com:8088/v1/bic_postman.html" target="_blank"><span style='color:#1155CC'>
+online postman
+</span></a></h1>
+
+<hr size=0 width="100%" align=center>
+</div>
+
+
+<div>
+<h1><a href="http://www.biczone.com:8088/v1"><span style='color:#1155CC'>
+http://www.biczone.com:8088/v1
+</span></a></h1>
+<p style='margin-left:36.0pt'><b>
+API Doc HTML
+</b></p>
+<h2>Header</h2>
+<p style='margin-left:36.0pt'>Content-Type: text/html</p>
+<h2>GET</h2>
+<pre style='margin-left:36.0pt'>
+{}
+</pre>
+<h2>Response</h2>
+<pre style='margin-left:36.0pt'>
+本文
+</pre>
+<hr size=0 width="100%" align=center>
+</div>
+
+
+<div>
+<h1><a href="http://www.biczone.com:8088/v1/version"><span style='color:#1155CC'>
+http://www.biczone.com:8088/v1/version
+</span></a></h1>
+<p style='margin-left:36.0pt'><b>
+API Version
+</b></p>
+<h2>Header</h2>
+<p style='margin-left:36.0pt'>Content-Type: application-json</p>
+<h2>GET</h2>
+<pre style='margin-left:36.0pt'>
+{}
+</pre>
+<h2>Response</h2>
+<pre style='margin-left:36.0pt'>
+{
+    "status": "success",
+    "code": 200,
+    "message": "",
+    "payload": "2.0.0"
+}
+</pre>
+<hr size=0 width="100%" align=center>
+</div>
+
+
+<div>
+<h1><a href="http://www.biczone.com:8088/v1/mesh"><span style='color:#1155CC'>
+http://www.biczone.com:8088/v1/mesh
+</span></a></h1>
+<p style='margin-left:36.0pt'><b>
+Mesh Network Info 藍芽 Mesh 網路資訊
+</b></p>
+<h2>Header</h2>
+<p style='margin-left:36.0pt'>Content-Type: application-json</p>
+<h2>GET</h2>
+<pre style='margin-left:36.0pt'>
+{}
+</pre>
+<h2>Response</h2>
+<pre style='margin-left:36.0pt'>
+{
+    "status": "success",
+    "code": 200,
+    "message": "",
+    "payload": {
+        "provisionerAddress": "7f1e",
+        "provisionerUUID": "d4ba8dbe-c739-4bbf-8fd4-6edc994af11c",
+        "meshUUID": "a5bbec73-82df-4889-b588-fb11c37d2883",
+        "nextUnicast": "0348",
+        "netKey": "4c53425545617379436f6e667e95f07c",
+        "meshName": "BIC-666"
+    }
+}
+</pre>
+<hr size=0 width="100%" align=center>
+</div>
+
+
+<div>
+<h1><a href="http://www.biczone.com:8088/v1/mesh/export"><span style='color:#1155CC'>
+http://www.biczone.com:8088/v1/mesh/export
+</span></a></h1>
+<p style='margin-left:36.0pt'><b>
+Export Mesh Network 獲取匯出配置文件
+</b></p>
+<h2>Header</h2>
+<p style='margin-left:36.0pt'>Content-Type: application-json</p>
+<h2>GET</h2>
+<pre style='margin-left:36.0pt'>
+{}
+</pre>
+<h2>Response</h2>
+<pre style='margin-left:36.0pt'>
+{
+    "status": "success",
+    "code": 200,
+    "message": "",
+    "payload": { &lt;The followings is the content of exported BIC.txt  以下內容即匯出檔案內容&gt;
+        "MeshInfo": {
+        ...
+        }
+    }
+}
+
+PS1: python server not support Export
+</pre>
+<hr size=0 width="100%" align=center>
+</div>
+
+
+<div>
+<h1><a href="http://www.biczone.com:8088/v1/mesh/import"><span style='color:#1155CC'>
+http://www.biczone.com:8088/v1/mesh/import
+</span></a></h1>
+<p style='margin-left:36.0pt'><b>
+Import Mesh Network 寫入匯出配置文件
+</b></p>
+<h2>Header</h2>
+<p style='margin-left:36.0pt'>Content-Type: application-json</p>
+<h2>POST</h2>
+<pre style='margin-left:36.0pt'>
+{ &lt;The followings is the BIC data you want to import 以下內容即要匯入的BIC資料&gt;
+    "MeshInfo": {
+        ...
+    }
+}
+</pre>
+<h2>Response</h2>
+<pre style='margin-left:36.0pt'>
+{
+    "status": "success",
+    "code": 200,
+    "message": "",
+    "payload": { &lt;The followings is the imported BIC data 以下內容為匯入的BIC資料&gt;
+        "MeshInfo": {
+        ...
+        }
+    }
+}
+</pre>
+<hr size=0 width="100%" align=center>
+</div>
+
+
+<div>
+<h1><a href="http://www.biczone.com:8088/v1/mesh/reset"><span style='color:#1155CC'>
+http://www.biczone.com:8088/v1/mesh/reset
+</span></a></h1>
+<p style='margin-left:36.0pt'><b>
+Reset Mesh Network 重置藍芽 Mesh 網路 (重置網路下所以設備及參數)
+</b></p>
+<h2>Header</h2>
+<p style='margin-left:36.0pt'>Content-Type: application-json</p>
+<h2>GET</h2>
+<pre style='margin-left:36.0pt'>
+{}
+</pre>
+<h2>Response</h2>
+<pre style='margin-left:36.0pt'>
+{
+    "status": "success",
+    "code": 200,
+    "message": "",
+    "payload": ""
+}
+</pre>
+<hr size=0 width="100%" align=center>
+</div>
+
+
+<div>
+<h1><a href="http://www.biczone.com:8088/v1/mesh/scan"><span style='color:#1155CC'>
+http://www.biczone.com:8088/v1/mesh/scan
+</span></a></h1>
+<p style='margin-left:36.0pt'><b>
+Scan unprovisioned devices 掃描藍芽 Mesh 網路(查詢尚未配對裝置List)
+</b></p>
+<h2>Header</h2>
+<p style='margin-left:36.0pt'>Content-Type: application-json</p>
+<h2>GET</h2>
+<pre style='margin-left:36.0pt'>
+{}
+</pre>
+<h2>Response</h2>
+<pre style='margin-left:36.0pt'>
+{
+    "status": "success",
+    "code": 200,
+    "message": "",
+    "payload": {
+        "devices": [
+            {
+                "deviceDescription": "",
+                "rssi": -64,
+                "uuid": "17b09e44-3aac-4e8a-eb38-cf468e972507",
+                "meshState": 0,
+                "sensorClientGroupAddress": 0,
+                "defaultName": "DT6",
+                "deviceAddress": "D7:8E:46:CF:38:EB"
+            },
+            {
+                "deviceDescription": "",
+                "rssi": -57,
+                "uuid": "da0b9cdf-4d5a-3531-4a49-ef78a7f32507",
+                "meshState": 0,
+                "sensorClientGroupAddress": 0,
+                "defaultName": "NoDefaultName",
+                "deviceAddress": "F3:A7:78:EF:49:4A"
+            }
+        ]
+    }
+}
+
+</pre>
+<hr size=0 width="100%" align=center>
+</div>
+
+
+<div>
+<h1><a href="http://www.biczone.com:8088/v1/device"><span style='color:#1155CC'>
+http://www.biczone.com:8088/v1/device
+</span></a></h1>
+<p style='margin-left:36.0pt'><b>
+Query provisioned devices 查詢可控制裝置
+</b></p>
+<h2>Header</h2>
+<p style='margin-left:36.0pt'>Content-Type: application-json</p>
+<h2>GET</h2>
+<pre style='margin-left:36.0pt'>
+{}
+</pre>
+<h2>Response</h2>
+<pre style='margin-left:36.0pt'>
+{
+    "status": "success",
+    "code": 200,
+    "message": "",
+    "payload": {
+        "devices": [
+            {
+                "id": 1,
+                "name": "DT8_1",
+                "uniAddress": 4,
+                "uuid": "68b542e0-244b-045c-4460-fa2687d22507",
+                "state": {
+                    "onOff": 1,
+                    "level": 255,
+                    "cct": 255
+                }
+            },
+            {
+                "id": 2,
+                "name": "DT6_2",
+                "uniAddress": 8,
+                "uuid": "24219b10-e7cf-93cc-6cb6-e7c906b22507",
+                "state": {
+                    "onOff": 1,
+                    "level": 255,
+                    "cct": 0
+                }
+            }
+        ]
+    }
+}
+</pre>
+<hr size=0 width="100%" align=center>
+</div>
+
+
+<div>
+<h1><a href="http://www.biczone.com:8088/v1/device/uniAddress/4"><span style='color:#1155CC'>
+http://www.biczone.com:8088/v1/device/uniAddress/4
+</span></a>
+</h1>
+<p style='margin-left:36.0pt'>
+<b>Alternative way of specific device 額外指定裝置方式：</b><br></p>
+<p style='margin-left:56.0pt'>
+/v2/device/id/1<br>
+/v2/device/uuid/da0b9cdf-4d5a-3531-4a49-ef78a7f32501<br></p>
+<br>
+<p style='margin-left:36.0pt'><b>
+Query provisioned devices (w/ device ID) 查詢可控制裝置 (輸入設備ID)
+</b></p>
+<h2>Header</h2>
+<p style='margin-left:36.0pt'>Content-Type: application-json</p>
+<h2>GET</h2>
+<pre style='margin-left:36.0pt'>
+{}
+</pre>
+<h2>Response</h2>
+<pre style='margin-left:36.0pt'>
+{
+    "status": "success",
+    "code": 200,
+    "message": "",
+    "payload": {
+        "devices": [
+            {
+                "id": 1,
+                "name": "DT8_1",
+                "uniAddress": 4,
+                "uuid": "68b542e0-244b-045c-4460-fa2687d22507",
+                "state": {
+                    "onOff": 1,
+                    "level": 255,
+                    "cct": 255
+                }
+            }
+        ]
+    }
+}
+</pre>
+<hr size=0 width="100%" align=center>
+</div>
+
+
+<div>
+<h1><a href="http://www.biczone.com:8088/v1/device/uniAddress/4?realtime=onOff"><span style='color:#1155CC'>
+http://www.biczone.com:8088/v1/device/uniAddress/4?realtime=onOff
+</span></a>
+</h1>
+<p style='margin-left:36.0pt'>
+<b>Alternative way of specific device 額外指定裝置方式：</b><br></p>
+<p style='margin-left:56.0pt'>
+/v2/device/id/1?realtime=onOff<br>
+/v2/device/uuid/da0b9cdf-4d5a-3531-4a49-ef78a7f32501?realtime=onOff<br></p>
+<br>
+<p style='margin-left:36.0pt'><b>
+Query device status (w/ device ID) 查詢裝置狀態 (輸入設備ID)
+</b></p>
+<h2>Header</h2>
+<p style='margin-left:36.0pt'>Content-Type: application-json</p>
+<h2>GET</h2>
+<pre style='margin-left:36.0pt'>
+{}
+</pre>
+<h2>Response</h2>
+<pre style='margin-left:36.0pt'>
+{
+    "status": "success",
+    "code": 200,
+    "message": "",
+    "payload": {
+        "devices": [
+            {
+                "id": 1,
+                "name": "DT8_1",
+                "uniAddress": 4,
+                "uuid": "68b542e0-244b-045c-4460-fa2687d22507",
+                "state": {
+                    "onOff": 1
+                }
+            }
+        ]
+    }
+}
+PS1: "onOff" can be replaced by "level" or "cct"
+PS2: If "message" equal "timeout" ,api will return value from local memory
+</pre>
+<hr size=0 width="100%" align=center>
+</div>
+
+
+<div style="display:none;">
+<h1><a href="http://www.biczone.com:8088/v1/device/realtime/uniAddress/4"><span style='color:#1155CC'>
+http://www.biczone.com:8088/v1/device/realtime/uniAddress/4
+</span></a>
+</h1>
+<p style='margin-left:36.0pt'>
+<b>Alternative way of specific device 額外指定裝置方式：</b><br></p>
+<p style='margin-left:56.0pt'>
+/v2/device/realtime/id/1<br>
+/v2/device/realtime/uuid/da0b9cdf-4d5a-3531-4a49-ef78a7f32501<br></p>
+<br>
+<p style='margin-left:36.0pt'><b>
+Query device status (w/ device ID) 查詢裝置狀態 (輸入設備ID)
+</b></p>
+<h2>Header</h2>
+<p style='margin-left:36.0pt'>Content-Type: application-json</p>
+<h2>GET</h2>
+<pre style='margin-left:36.0pt'>
+{}
+</pre>
+<h2>Response</h2>
+<pre style='margin-left:36.0pt'>
+{
+    "status": "success",
+    "code": 200,
+    "message": "",
+    "payload": {
+        "devices": [
+            {
+                "id": 1,
+                "name": "DT8_1",
+                "uniAddress": 4,
+                "uuid": "68b542e0-244b-045c-4460-fa2687d22507",
+                "state": {
+                    "onOff": 1,
+                    "level": 255,
+                    "cct": 255
+                }
+            }
+        ]
+    }
+}
+</pre>
+<hr size=0 width="100%" align=center>
+</div>
+
+
+<div>
+<h1><a href="http://www.biczone.com:8088/v1/device/uniAddress/4/ping"><span style='color:#1155CC'>
+http://www.biczone.com:8088/v1/device/uniAddress/4/ping
+</span></a>
+</h1>
+<p style='margin-left:36.0pt'>
+<b>Alternative way of specific device 額外指定裝置方式：</b><br></p>
+<p style='margin-left:56.0pt'>
+/v2/device/id/1/ping<br>
+/v2/device/uuid/da0b9cdf-4d5a-3531-4a49-ef78a7f32501/ping<br></p>
+<br>
+<p style='margin-left:36.0pt'><b>
+Identify device(w/ device ID) 設置裝置ID燈閃爍(輸入設備ID)
+</b></p>
+<h2>Header</h2>
+<p style='margin-left:36.0pt'>Content-Type: application-json</p>
+<h2>GET</h2>
+<pre style='margin-left:36.0pt'>
+{}
+</pre>
+<h2>Response</h2>
+<pre style='margin-left:36.0pt'>
+{
+    "status": "success",
+    "code": 200,
+    "message": "",
+    "payload": ""
+}
+</pre>
+<hr size=0 width="100%" align=center>
+</div>
+
+
+<div>
+<h1><a href="http://www.biczone.com:8088/v1/device"><span style='color:#1155CC'>
+http://www.biczone.com:8088/v1/device
+</span></a></h1>
+<p style='margin-left:36.0pt'><b>
+Add device to mesh network 將裝置加入 Mesh 網路
+</b></p>
+<h2>Header</h2>
+<p style='margin-left:36.0pt'>Content-Type: application-json</p>
+<h2>POST</h2>
+<pre style='margin-left:36.0pt'>
+{
+    "devices": [
+        {
+            "deviceDescription": "",
+            "rssi": -64,
+            "uuid": "17b09e44-3aac-4e8a-eb38-cf468e972507",
+            "meshState": 0,
+            "sensorClientGroupAddress": 0,
+            "defaultName": "DT6"
+        },
+        {
+            "deviceDescription": "",
+            "rssi": -57,
+            "uuid": "da0b9cdf-4d5a-3531-4a49-ef78a7f32507",
+            "meshState": 0,
+            "sensorClientGroupAddress": 0,
+            "defaultName": "DT8"
+        }
+    ]
+}
+</pre>
+<h2>Response</h2>
+<pre style='margin-left:36.0pt'>
+{
+    "status": "success",
+    "code": 200,
+    "message": "",
+    "payload": {
+        "devices": [
+            {
+                "id": 3,
+                "uuid": "17b09e44-3aac-4e8a-eb38-cf468e972507",
+                "uniAddress": 12,
+                "defaultName": "DT6",
+                "meshState": 0,
+                "sensorClientGroupAddress": 0,
+                "rssi": 0,
+                "deviceDescription": ""
+            },
+            {
+                "id": 4,
+                "uuid": "da0b9cdf-4d5a-3531-4a49-ef78a7f32507",
+                "uniAddress": 16,
+                "defaultName": "DT8",
+                "meshState": 0,
+                "sensorClientGroupAddress": 0,
+                "rssi": 0,
+                "deviceDescription": ""
+            }
+        ]
+    }
+}
+</pre>
+<hr size=0 width="100%" align=center>
+</div>
+
+
+<div>
+<h1><a href="http://www.biczone.com:8088/v1/device"><span style='color:#1155CC'>
+http://www.biczone.com:8088/v1/device
+</span></a></h1>
+<p style='margin-left:36.0pt'><b>
+Remove device from mesh network 將裝置從 Mesh 網路移除
+</b></p>
+<h2>Header</h2>
+<p style='margin-left:36.0pt'>Content-Type: application-json</p>
+<h2>DELETE</h2>
+<pre style='margin-left:36.0pt'>
+{
+    "devices": [
+        {
+            "id": 3,
+            "uniAddress": 12,
+            "deviceDescription": "",
+            "rssi": -57,
+            "uuid": "17b09e44-3aac-4e8a-eb38-cf468e972507",
+            "meshState": 0,
+            "sensorClientGroupAddress": 0,
+            "defaultName": "DT6"
+        },
+        {
+            "id": 4,
+            "uniAddress": 16,
+            "deviceDescription": "",
+            "rssi": -74,
+            "uuid": "da0b9cdf-4d5a-3531-4a49-ef78a7f32507",
+            "meshState": 0,
+            "sensorClientGroupAddress": 0,
+            "defaultName": "DT8"
+        }
+    ]
+}
+</pre>
+<h2>Response</h2>
+<pre style='margin-left:36.0pt'>
+{
+    "status": "success",
+    "code": 200,
+    "message": "",
+    "payload": ""
+}
+</pre>
+<hr size=0 width="100%" align=center>
+</div>
+
+
+<div>
+<h1><a href="http://www.biczone.com:8088/v1/device"><span style='color:#1155CC'>
+http://www.biczone.com:8088/v1/device
+</span></a></h1>
+<p style='margin-left:36.0pt'><b>
+Control device On/Off 控制裝置開關
+</b></p>
+<h2>Header</h2>
+<p style='margin-left:36.0pt'>Content-Type: application-json</p>
+<h2>PATCH</h2>
+<pre style='margin-left:36.0pt'>
+{
+    "device": {
+        "id": 1,
+        "uniAddress": 4,
+        "state": {
+            "onOff": 0
+        }
+    }
+}
+
+PS1: "onOff":"0" or "1"
+</pre>
+<h2>Response</h2>
+<pre style='margin-left:36.0pt'>
+{
+    "status": "success",
+    "code": 200,
+    "message": "",
+    "payload": {
+        "devices": [
+            {
+                "id": 1,
+                "deviceDescription": "0",
+                "state": {
+                    "onOff": 0,
+                    "level": 0,
+                    "cct": 255
+                }
+            }
+        ]
+    }
+}
+</pre>
+<hr size=0 width="100%" align=center>
+</div>
+
+
+<div>
+<h1><a href="http://www.biczone.com:8088/v1/device"><span style='color:#1155CC'>
+http://www.biczone.com:8088/v1/device
+</span></a></h1>
+<p style='margin-left:36.0pt'><b>
+Control device light level or cct level 控制裝置調光調色
+</b></p>
+<h2>Header</h2>
+<p style='margin-left:36.0pt'>Content-Type: application-json</p>
+<h2>PATCH</h2>
+<pre style='margin-left:36.0pt'>
+{
+    "device": {
+        "id": 1,
+        "uniAddress": 4,
+        "state": {
+            "level": 100
+        }
+    }
+}
+
+PS1:"level":0~255,"cct":0~255
+PS2:"level","cct" 不可同時送
+</pre>
+<h2>Response</h2>
+<pre style='margin-left:36.0pt'>
+{
+    "status": "success",
+    "code": 200,
+    "message": "",
+    "payload": {
+        "devices": [
+            {
+                "id": 1,
+                "deviceDescription": "0",
+                "state": {
+                    "onOff": 1,
+                    "level": 100,
+                    "cct": 255
+                }
+            }
+        ]
+    }
+}
+</pre>
+<hr size=0 width="100%" align=center>
+</div>
+
+
+<div>
+<h1><a href="http://www.biczone.com:8088/v1/device/uniAddress/4/output"><span style='color:#1155CC'>
+http://www.biczone.com:8088/v1/device/uniAddress/4/output
+</span></a></h1>
+<p style='margin-left:36.0pt'><b>
+Query device light Output 查詢裝置Output
+</b></p>
+<h2>Header</h2>
+<p style='margin-left:36.0pt'>Content-Type: application-json</p>
+<h2>GET</h2>
+<pre style='margin-left:36.0pt'>
+{}
+</pre>
+<h2>Response</h2>
+<pre style='margin-left:36.0pt'>
+{
+    "status": "success",
+    "code": 200,
+    "message": "",
+    "payload": {
+        "output": "log"
+    }
+}
+</pre>
+<hr size=0 width="100%" align=center>
+</div>
+
+
+<div>
+<h1><a href="http://www.biczone.com:8088/v1/device/uniAddress/4/output/linear"><span style='color:#1155CC'>
+http://www.biczone.com:8088/v1/device/uniAddress/4/output/linear
+</span></a></h1>
+<p style='margin-left:36.0pt'><b>
+Control device light Output 控制裝置Output
+</b></p>
+<h2>Header</h2>
+<p style='margin-left:36.0pt'>Content-Type: application-json</p>
+<h2>GET</h2>
+<pre style='margin-left:36.0pt'>
+{}
+</pre>
+<h2>Response</h2>
+<pre style='margin-left:36.0pt'>
+{
+    "status": "success",
+    "code": 200,
+    "message": "",
+    "payload": {
+        "output": "linear"
+    }
+}
+PS:URL 中的 "linear" 可替換成 "log"
+</pre>
+<hr size=0 width="100%" align=center>
+</div>
+
+
+<div>
+<h1><a href="http://www.biczone.com:8088/v1/group"><span style='color:#1155CC'>
+http://www.biczone.com:8088/v1/group
+</span></a></h1>
+<p style='margin-left:36.0pt'><b>
+Query groups 查詢可控群組
+</b></p>
+<h2>Header</h2>
+<p style='margin-left:36.0pt'>Content-Type: application-json</p>
+<h2>GET</h2>
+<pre style='margin-left:36.0pt'>
+{}
+</pre>
+<h2>Response</h2>
+<pre style='margin-left:36.0pt'>
+{
+    "status": "success",
+    "code": 200,
+    "message": "",
+    "payload": {
+        "groups": [
+            {
+                "id": 1,
+                "name": "群組0",
+                "devices": [
+                    {
+                        "id": 1,
+                        "name": "DT8_1",
+                        "uniAddress": 4,
+                        "uuid": "68b542e0-244b-045c-4460-fa2687d22507",
+                        "state": {
+                            "onOff": 1,
+                            "level": 100,
+                            "cct": 255
+                        }
+                    },
+                    {
+                        "id": 2,
+                        "name": "DT6_2",
+                        "uniAddress": 8,
+                        "uuid": "24219b10-e7cf-93cc-6cb6-e7c906b22507",
+                        "state": {
+                            "onOff": 1,
+                            "level": 255,
+                            "cct": 0
+                        }
+                    }
+                ],
+                "uniAddress": 49168
+            },
+            {
+                "id": 2,
+                "name": "群組1",
+                "devices": [
+                    {
+                        "id": 1,
+                        "name": "DT8_1",
+                        "uniAddress": 4,
+                        "uuid": "68b542e0-244b-045c-4460-fa2687d22507",
+                        "state": {
+                            "onOff": 1,
+                            "level": 100,
+                            "cct": 255
+                        }
+                    }
+                ],
+                "uniAddress": 49178
+            }
+        ]
+    }
+}
+</pre>
+<hr size=0 width="100%" align=center>
+</div>
+
+
+<div>
+<h1><a href="http://www.biczone.com:8088/v1/group?id=1"><span style='color:#1155CC'>
+http://www.biczone.com:8088/v1/group?id=1
+</span></a></h1>
+<p style='margin-left:36.0pt'><b>
+Query devices in group 查詢群組裡裝置
+</b></p>
+<h2>Header</h2>
+<p style='margin-left:36.0pt'>Content-Type: application-json</p>
+<h2>GET</h2>
+<pre style='margin-left:36.0pt'>
+{}
+</pre>
+<h2>Response</h2>
+<pre style='margin-left:36.0pt'>
+{
+    "status": "success",
+    "code": 200,
+    "message": "",
+    "payload": {
+        "groups": [
+            {
+                "id": 1,
+                "name": "群組0",
+                "devices": [
+                    {
+                        "id": 1,
+                        "name": "DT8_1",
+                        "uniAddress": 4,
+                        "uuid": "68b542e0-244b-045c-4460-fa2687d22507",
+                        "state": {
+                            "onOff": 1,
+                            "level": 100,
+                            "cct": 255
+                        }
+                    },
+                    {
+                        "id": 2,
+                        "name": "DT6_2",
+                        "uniAddress": 8,
+                        "uuid": "24219b10-e7cf-93cc-6cb6-e7c906b22507",
+                        "state": {
+                            "onOff": 1,
+                            "level": 255,
+                            "cct": 0
+                        }
+                    }
+                ],
+                "uniAddress": 49168
+            }
+        ]
+    }
+}
+</pre>
+<hr size=0 width="100%" align=center>
+</div>
+
+
+<div>
+<h1><a href="http://www.biczone.com:8088/v1/group"><span style='color:#1155CC'>
+http://www.biczone.com:8088/v1/group
+</span></a></h1>
+<p style='margin-left:36.0pt'><b>
+New group 新增群組
+</b></p>
+<h2>Header</h2>
+<p style='margin-left:36.0pt'>Content-Type: application-json</p>
+<h2>POST</h2>
+<pre style='margin-left:36.0pt'>
+{
+    "id": 0,
+    "name": "WebG2",
+    "newDevices": [
+        {
+            "uniAddress": 4
+        },
+        {
+            "uniAddress": 8
+        }
+    ]
+}
+</pre>
+<h2>Response</h2>
+<pre style='margin-left:36.0pt'>
+{
+    "code": 200,
+    "message": "",
+    "payload": {
+        "groups": [
+            {
+                "devices": [
+                    {
+                        "id": 1,
+                        "name": "DT8_1",
+                        "uniAddress": 4
+                    },
+                    {
+                        "id": 2,
+                        "name": "DT6_2",
+                        "uniAddress": 8
+                    }
+                ],
+                "id": 3,
+                "uniAddress": 49188
+            }
+        ]
+    },
+    "status": "success"
+}
+</pre>
+<hr size=0 width="100%" align=center>
+</div>
+
+
+<div>
+<h1><a href="http://www.biczone.com:8088/v1/group"><span style='color:#1155CC'>
+http://www.biczone.com:8088/v1/group
+</span></a></h1>
+<p style='margin-left:36.0pt'><b>
+Edit group 編輯群組
+</b></p>
+<h2>Header</h2>
+<p style='margin-left:36.0pt'>Content-Type: application-json</p>
+<h2>PATCH</h2>
+<pre style='margin-left:36.0pt'>
+{
+    "id": 3,
+    "name": "WebG1",
+    "newDevices": [],
+    "delDevices": [
+        {
+            "uniAddress": 8
+        }
+    ]
+}
+</pre>
+<h2>Response</h2>
+<pre style='margin-left:36.0pt'>
+{
+    "code": 200,
+    "message": "",
+    "payload": {
+        "groups": [
+            {
+                "id": 3,
+                "uniAddress": 49188,
+                "devices": [
+                    {
+                        "id": 1,
+                        "name": "DT8_1",
+                        "uniAddress": 4
+                    }
+                ]
+            }
+        ]
+    },
+    "status": "success"
+}
+</pre>
+<hr size=0 width="100%" align=center>
+</div>
+
+
+<div>
+<h1><a href="http://www.biczone.com:8088/v1/group"><span style='color:#1155CC'>
+http://www.biczone.com:8088/v1/group
+</span></a></h1>
+<p style='margin-left:36.0pt'><b>
+Delete group 刪除群組
+</b></p>
+<h2>Header</h2>
+<p style='margin-left:36.0pt'>Content-Type: application-json</p>
+<h2>DELETE</h2>
+<pre style='margin-left:36.0pt'>
+{
+    "group": {
+        "id": 3,
+        "uniAddress": 49188
+    }
+}
+</pre>
+<h2>Response</h2>
+<pre style='margin-left:36.0pt'>
+{
+    "status": "success",
+    "code": 200,
+    "message": "",
+    "payload": ""
+}
+</pre>
+<hr size=0 width="100%" align=center>
+</div>
+
+
+<div>
+<h1><a href="http://www.biczone.com:8088/v1/group"><span style='color:#1155CC'>
+http://www.biczone.com:8088/v1/group
+</span></a></h1>
+<p style='margin-left:36.0pt'><b>
+Control group On/Off 控制裝置群組開關
+</b></p>
+<h2>Header</h2>
+<p style='margin-left:36.0pt'>Content-Type: application-json</p>
+<h2>PATCH</h2>
+<pre style='margin-left:36.0pt'>
+{
+    "group": {
+        "id": 1,
+        "uniAddress": 49168,
+        "state": {
+            "onOff": 1
+        }
+    }
+}
+</pre>
+<h2>Response</h2>
+<pre style='margin-left:36.0pt'>
+{
+    "code": 200,
+    "message": "",
+    "payload": {
+        "groups": [
+            {
+                "id": 1,
+                "uniAddress": 49168,
+                "state": {
+                    "onOff": 1,
+                    "level": 128,
+                    "cct": 128
+                }
+            }
+        ]
+    },
+    "status": "success"
+}
+
+PS1: "onOff":"0" or "1"
+</pre>
+<hr size=0 width="100%" align=center>
+</div>
+
+
+<div>
+<h1><a href="http://www.biczone.com:8088/v1/group"><span style='color:#1155CC'>
+http://www.biczone.com:8088/v1/group
+</span></a></h1>
+<p style='margin-left:36.0pt'><b>
+Control group light level or cct level 控制群組置調光調色
+</b></p>
+<h2>Header</h2>
+<p style='margin-left:36.0pt'>Content-Type: application-json</p>
+<h2>PATCH</h2>
+<pre style='margin-left:36.0pt'>
+{
+    "group": {
+        "id": 1,
+        "uniAddress": 49168,
+        "state": {
+            "level": 100
+        }
+    }
+}
+</pre>
+<h2>Response</h2>
+<pre style='margin-left:36.0pt'>
+{
+    "code": 200,
+    "message": "",
+    "payload": {
+        "groups": [
+            {
+                "id": 1,
+                "uniAddress": 49168,
+                "state": {
+                    "onOff": 1,
+                    "level": 100,
+                    "cct": 128
+                }
+            }
+        ]
+    },
+    "status": "success"
+}
+
+PS1:"level":0~255,"cct":0~255
+PS2:"level","cct" 不可同時送
+</pre>
+<hr size=0 width="100%" align=center>
+</div>
+
+
+<div>
+<h1><a href="http://www.biczone.com:8088/v1/group/uniAddress/4/output/linear"><span style='color:#1155CC'>
+http://www.biczone.com:8088/v1/group/uniAddress/4/output/linear
+</span></a></h1>
+<p style='margin-left:36.0pt'><b>
+Control group Output 控制群組Output
+</b></p>
+<h2>Header</h2>
+<p style='margin-left:36.0pt'>Content-Type: application-json</p>
+<h2>GET</h2>
+<pre style='margin-left:36.0pt'>
+{}
+</pre>
+<h2>Response</h2>
+<pre style='margin-left:36.0pt'>
+{
+    "status": "success",
+    "code": 200,
+    "message": "",
+    "payload": {
+        "output": "linear"
+    }
+}
+PS:URL 中的 "linear" 可替換成 "log"
+</pre>
+<hr size=0 width="100%" align=center>
+</div>
+
+
+<div>
+<h1><a href="http://www.biczone.com:8088/v1/scene"><span style='color:#1155CC'>
+http://www.biczone.com:8088/v1/scene
+</span></a></h1>
+<p style='margin-left:36.0pt'><b>
+Query scenes 查詢可控場景
+</b></p>
+<h2>Header</h2>
+<p style='margin-left:36.0pt'>Content-Type: application-json</p>
+<h2>GET</h2>
+<pre style='margin-left:36.0pt'>
+{}
+</pre>
+<h2>Response</h2>
+<pre style='margin-left:36.0pt'>
+{
+    "code": 200,
+    "message": "",
+    "payload": {
+        "scenes": [
+            {
+                "id": 1,
+                "name": "sce1",
+                "sceneNum": 1
+            },
+            {
+                "id": 2,
+                "name": "sce2",
+                "sceneNum": 2
+            }
+        ]
+    },
+    "status": "success"
+}
+</pre>
+<hr size=0 width="100%" align=center>
+</div>
+
+
+<div>
+<h1><a href="http://www.biczone.com:8088/v1/scene/id/1/recall"><span style='color:#1155CC'>
+http://www.biczone.com:8088/v1/scene/id/1/recall
+</span></a></h1>
+<p style='margin-left:36.0pt'><b>
+Recall scene 控制場景
+</b></p>
+<h2>Header</h2>
+<p style='margin-left:36.0pt'>Content-Type: application-json</p>
+<h2>GET</h2>
+<pre style='margin-left:36.0pt'>
+{}
+</pre>
+<h2>Response</h2>
+<pre style='margin-left:36.0pt'>
+{
+    "status": "success",
+    "code": 200,
+    "message": "",
+    "payload": ""
+}
+</pre>
+<hr size=0 width="100%" align=center>
+</div>
+
+
+<div>
+<h1><a href="http://www.biczone.com:8088/v1/schedule"><span style='color:#1155CC'>
+http://www.biczone.com:8088/v1/schedule
+</span></a></h1>
+<p style='margin-left:36.0pt'><b>
+Query schedules 查詢已設定時程
+</b></p>
+<h2>Header</h2>
+<p style='margin-left:36.0pt'>Content-Type: application-json</p>
+<h2>GET</h2>
+<pre style='margin-left:36.0pt'>
+{}
+</pre>
+<h2>Response</h2>
+<pre style='margin-left:36.0pt'>
+{
+    "status": "success",
+    "code": 200,
+    "message": "",
+    "payload": {
+        "schedules": [
+            {
+                "id": 1,
+                "name": "sch1",
+                "sceneNum": 1,
+                "startTime": "12:00",
+                "repeatWeekly": "1111111"
+            },
+            {
+                "id": 2,
+                "name": "sch2",
+                "sceneNum": 2,
+                "startTime": "12:00",
+                "repeatWeekly": "0011111"
+            }
+        ]
+    }
+}
+</pre>
+<hr size=0 width="100%" align=center>
+</div>
+
+
+<div>
+<h1><a href="http://www.biczone.com:8088/v1/schedule"><span style='color:#1155CC'>
+http://www.biczone.com:8088/v1/schedule
+</span></a></h1>
+<p style='margin-left:36.0pt'><b>
+New schedule 新增定時設定
+</b></p>
+<h2>Header</h2>
+<p style='margin-left:36.0pt'>Content-Type: application-json</p>
+<h2>POST</h2>
+<pre style='margin-left:36.0pt'>
+{
+    "schedule": {
+        "id": 0,
+        "name": "sch3",
+        "sceneNum": 1,
+        "startTime": "12:00",
+        "repeatWeekly": "1111111"
+    }
+}
+</pre>
+<h2>Response</h2>
+<pre style='margin-left:36.0pt'>
+{
+    "code": 200,
+    "message": "",
+    "status": "success",
+    "payload": ""
+}
+</pre>
+<hr size=0 width="100%" align=center>
+</div>
+
+
+<div>
+<h1><a href="http://www.biczone.com:8088/v1/schedule"><span style='color:#1155CC'>
+http://www.biczone.com:8088/v1/schedule
+</span></a></h1>
+<p style='margin-left:36.0pt'><b>
+Edit schedule 編輯定時設定
+</b></p>
+<h2>Header</h2>
+<p style='margin-left:36.0pt'>Content-Type: application-json</p>
+<h2>PATCH</h2>
+<pre style='margin-left:36.0pt'>
+{
+    "schedule": {
+        "id": 1,
+        "name": "Sch1",
+        "sceneNum": 1,
+        "startTime": "12:00",
+        "repeatWeekly": "0111110"
+    }
+}
+</pre>
+<h2>Response</h2>
+<pre style='margin-left:36.0pt'>
+{
+    "code": 200,
+    "message": "",
+    "status": "success",
+    "payload": ""
+}
+</pre>
+<hr size=0 width="100%" align=center>
+</div>
+
+
+<div>
+<h1><a href="http://www.biczone.com:8088/v1/schedule"><span style='color:#1155CC'>
+http://www.biczone.com:8088/v1/schedule
+</span></a></h1>
+<p style='margin-left:36.0pt'><b>
+Delete schedule 刪除定時
+</b></p>
+<h2>Header</h2>
+<p style='margin-left:36.0pt'>Content-Type: application-json</p>
+<h2>DELETE</h2>
+<pre style='margin-left:36.0pt'>
+{
+    "id": 3
+}
+</pre>
+<h2>Response</h2>
+<pre style='margin-left:36.0pt'>
+{
+    "code": 200,
+    "message": "",
+    "status": "success",
+    "payload": ""
+}
+</pre>
+<hr size=0 width="100%" align=center>
+</div>
+
+
+<div>
+<h1><a href="http://www.biczone.com:8088/v1/schedule?id=1"><span style='color:#1155CC'>
+http://www.biczone.com:8088/v1/schedule?id=1
+</span></a></h1>
+<p style='margin-left:36.0pt'><b>
+Query schedule setting 獲取定時設定資料
+</b></p>
+<h2>Header</h2>
+<p style='margin-left:36.0pt'>Content-Type: application-json</p>
+<h2>GET</h2>
+<pre style='margin-left:36.0pt'>
+{}
+</pre>
+<h2>Response</h2>
+<pre style='margin-left:36.0pt'>
+{
+    "status": "success",
+    "code": 200,
+    "message": "",
+    "payload": {
+        "schedules": [
+            {
+                "id": 1,
+                "name": "Sch1",
+                "sceneNum": 1,
+                "startTime": "12:00",
+                "repeatWeekly": "0111110"
+            }
+        ]
+    }
+}
+</pre>
+<hr size=0 width="100%" align=center>
+</div>
+
+
+<div>
+<h1><a href="http://www.biczone.com:8088/v1/time"><span style='color:#1155CC'>
+http://www.biczone.com:8088/v1/time
+</span></a></h1>
+<p style='margin-left:36.0pt'><b>
+Sync Time 校正時間
+</b></p>
+<h2>Header</h2>
+<p style='margin-left:36.0pt'>Content-Type: application-json</p>
+<h2>PATCH</h2>
+<pre style='margin-left:36.0pt'>
+{
+    "time": {}
+}
+</pre>
+<h2>Response</h2>
+<pre style='margin-left:36.0pt'>
+{
+    "status": "success",
+    "code": 200,
+    "message": "",
+    "payload": ""
+}
+</pre>
+<hr size=0 width="100%" align=center>
+</div>
+
+
+</body>
+</html>

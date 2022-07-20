@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.6/socket.io.min.js"></script>
+    <title>BIC ZONE</title>
+</head>
+
+<body>
+ </body>
+
+</html>
+
+<script type="text/javascript">
+    var websocket_url = 'http://127.0.0.1:5000/webSocket/stream';
+    var socket = io.connect(websocket_url);
+    //傳送訊息 間格秒數
+    socket.emit('stream',{'time':'0.1'});
+    //監聽回覆的訊息
+    socket.on('response',function(data){
+    if (data.code == '200'){
+        document.body.innerHTML += ('message: ' + JSON.stringify(data.data) + '<br>');
+    }
+    else{
+        alert('ERROR');
+    }
+    });
+
+
+</script>

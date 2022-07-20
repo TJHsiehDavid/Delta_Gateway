@@ -1,0 +1,86 @@
+CREATE TABLE IF NOT EXISTS lights (
+	id integer,
+	light_type integer,
+	img_path text,
+	dev_handle integer,
+	is_temperature integer,
+	primary key (id, light_type)
+);
+
+
+CREATE TABLE IF NOT EXISTS scenes (
+	id integer PRIMARY KEY,
+	img_path text,
+	scene_name text,
+	scene_time integer,
+	scene_level integer
+);
+
+CREATE TABLE IF NOT EXISTS scene_light_status (
+	light_id integer not null,
+	scene_id integer not null, 
+	light_type integer,
+	on_off integer,
+	lightness integer,
+	temperature integer,
+	foreign key (scene_id) references scenes(id),
+    primary key (scene_id, light_id, light_type) 
+);
+
+CREATE TABLE IF NOT EXISTS sensor_light_status (
+    light_id integer not null,
+	sensor_id integer not null,
+    foreign key (sensor_id) references sensors(id),
+    primary key (sensor_id, light_id)
+);
+
+CREATE TABLE IF NOT EXISTS sensors (
+	id integer PRIMARY KEY,
+	uuid text,
+	major_range text,
+	minor_range text,
+	v1 integer
+);
+
+CREATE TABLE IF NOT EXISTS beacons (
+	major integer,
+	minor integer,
+	uuid text,
+	name text,
+	primary key (major, minor, uuid)
+);
+
+CREATE TABLE IF NOT EXISTS sensor_groups (
+	sensor_id integer,
+	group_id integer,
+	primary key (sensor_id, group_id)
+);
+
+CREATE TABLE IF NOT EXISTS schedules (
+	id integer ,
+	schedule_id integer,
+	light_id integer,
+	scene_id integer,
+	schedule_type integer,
+	schedule_name text,
+	schedule_action integer,
+	week text,
+	hour integer,
+	mins integer,
+	primary key (id)
+);
+
+CREATE TABLE IF NOT EXISTS light_scene_relation (
+	light_id integer,
+	group_id integer,
+	scene_id integer,
+	primary key (light_id, group_id, scene_id)
+);
+
+CREATE TABLE IF NOT EXISTS light_schedule_relation (
+	light_id integer,
+	group_id integer,
+	scene_id integer,
+	schedule_id integer,
+	primary key (light_id, group_id, scene_id, schedule_id)
+);
