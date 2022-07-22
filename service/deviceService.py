@@ -2150,12 +2150,13 @@ class DeviceService():
         state = -1
         gc = self.getGenericOnOffClient()
         gc.publish_set(0, address_handle)
+
+        data_key_ary = [str(id) + "onOff"]
+        print("getSingleLight onOff:" + str(data_key_ary))
+        self.clearRespData(data_key_ary, gc)
+
         for i in range(0, retry):
             try:
-
-                data_key_ary = [str(id)+"onOff"]
-                print("getSingleLight onOff:"+str(data_key_ary))
-                self.clearRespData(data_key_ary, gc)
                 gc.get()
                 result_data = self.getRespData(data_key_ary, gc, timeout)
                 if result_data != {}:

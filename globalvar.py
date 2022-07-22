@@ -34,6 +34,8 @@ def write_config_ini():
     config.set("DEFAULT", "DEV_COM", str(global_dict["DEV_COM"]))
     config.set("DEFAULT", "DEV_BAUDRATE", str(global_dict["DEV_BAUDRATE"]))
     config.set("DEFAULT", "PORT", str(global_dict["PORT"]))
+    config.set("LOCAL_ADDRESS", "PROVISIONERADDRESS", str(global_dict["PROVISIONERADDRESS"]))
+    config.set("LOCAL_ADDRESS", "MANUAL_CHANGED", str(global_dict["MANUAL_CHANGED"]))
     hd = open(sdk_dir + '/config.ini', "w")
     config.write(hd)
     hd.close()
@@ -57,7 +59,8 @@ def read_config_ini():
     set_value('DEV_COM', config['DEFAULT']['DEV_COM'])
     set_value('DEV_BAUDRATE', config['DEFAULT'].getint('DEV_BAUDRATE'))
     set_value('PORT', config['DEFAULT'].getint('PORT'))
-
+    set_value('PROVISIONERADDRESS', config['LOCAL_ADDRESS'].getint('PROVISIONERADDRESS'))
+    set_value('MANUAL_CHANGED', config['LOCAL_ADDRESS'].getboolean('MANUAL_CHANGED'))
 
     device_config = ConfigParser()
     device_config.read(sdk_dir + '/device.ini')
@@ -75,6 +78,8 @@ def read_config_ini():
     print("read_config_ini get_value('DEV_COM'):"+str( get_value('DEV_COM') ))
     print("read_config_ini get_value('DEV_BAUDRATE'):"+str( get_value('DEV_BAUDRATE') ))
     print("read_config_ini get_value('PORT'):"+str( get_value('PORT') ))
+    print("read_config_ini get_value('PROVISIONERADDRESS'):" + str(get_value('PROVISIONERADDRESS')))
+    print("read_config_ini get_value('MANUAL_CHANGED'):" + str(get_value('MANUAL_CHANGED')))
     print("read_config_ini get_value('server_sitename'):"+str( get_value('server_sitename') ))
     print("read_config_ini get_value('server_device_number'):"+str( get_value('server_device_number') ))
     print("read_config_ini get_value('server_device_lost_sec'):"+str( get_value('server_device_lost_sec') ))

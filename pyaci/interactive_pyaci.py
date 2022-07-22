@@ -464,8 +464,15 @@ def importConfig(dev, configFile=this_file_dir+"/data/LTDMS.json", removeFile=Tr
     uni = getDeviceConfig("unicastAddress")
     localUnicastAddr = int(conf["provisionedData"]["provisioners"][0]["provisionerAddress"], 16)
     # updateConfig("unicastAddress", min(localUnicastAddr, uni) - 1)
+
     # 改成寫死 32767 = 7FFF,且不用-1
-    updateConfig("unicastAddress", min(localUnicastAddr, 32767 ))
+    # LoaclAddress(provisioner addr) changed by config.ini.
+    if gl.get_value('MANUAL_CHANGED') is True:
+        localUnicastAddr = gl.get_value("PROVISIONERADDRESS")
+        updateConfig("unicastAddress", min(localUnicastAddr, 32767))
+    else:
+        updateConfig("unicastAddress", min(localUnicastAddr, 32767))
+
 
     deviceInfo = conf["deviceInfoData"]
     # sensorClientGroupAddress = None if "sensorClientGroupAddress" not in deviceInfo[0]["data"] else deviceInfo[0]["data"]["sensorClientGroupAddress"]
@@ -487,7 +494,15 @@ def importConfig(dev, configFile=this_file_dir+"/data/LTDMS.json", removeFile=Tr
     timestamp = int(provisionedData["timestamp"], 16)
     appKeys = provisionedData["appKeys"]
     provisioners = provisionedData["provisioners"]
-    deviceUnicastAddress = int(provisioners[0]["provisionerAddress"], 16)
+
+    # localaddress如果有設定manual changed的話,就從config.ini新增
+    # 就不會從設定檔去讀取local address(provisioner address)
+    # below is origin function
+    # deviceUnicastAddress = int(provisioners[0]["provisionerAddress"], 16)
+    if gl.get_value('MANUAL_CHANGED') is True:
+        deviceUnicastAddress = localUnicastAddr
+    else:
+        deviceUnicastAddress = int(provisioners[0]["provisionerAddress"], 16)
     dev.local_unicast_address_start = deviceUnicastAddress
     db.mesh_name = meshName
     db.mesh_UUID = mt._UUID(bytearray.fromhex(meshUUID))
