@@ -5,9 +5,9 @@ import os
 import datetime
 import subprocess, time, sys
 
-# 要kill掉的进程的名字描述字符串.
+#app名字string.
 proc_name = 'app.py'
-time_allow = 60  # 允许60秒的空闲，超过这个值watchdog 返回0
+time_allow = 60
 
 
 class watchdog():
@@ -49,7 +49,7 @@ class watchdog():
         if x and self.ext == '.py':
             print('process is functioning normally.')
         else:
-            # 没有找到进程,直接启动该进程
+            #沒有找到特定程序,直接啟動該程序
             try:
                 self.p = subprocess.Popen(['python3.8', '%s' % self.proc], stdin=sys.stdin, stdout=sys.stdout, stderr=sys.stderr, shell=False)
             except:
