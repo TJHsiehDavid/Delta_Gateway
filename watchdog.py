@@ -8,7 +8,9 @@ import subprocess, time, sys
 #app名字string.
 proc_name = 'app.py'
 time_allow = 60
-
+sdk_dir = os.path.dirname(os.path.abspath(__file__))
+python_compiler_dir = '/usr/local/bin/python3.8'
+app_dir = os.path.dirname(os.path.abspath(__file__))
 
 class watchdog():
     def __init__(self, sleep_time, cmd):
@@ -28,30 +30,34 @@ class watchdog():
         ''' check proc有無啟動
             有：返回 1， 沒有：返回 0
         '''
-        ps_str = 'ps aux |grep %s | grep -v grep' %proc_name
-        x = os.popen(ps_str).read()
-        print(x)
+        global app_dir
+        app_dir = sdk_dir + '/' + proc_name
 
-        if x == '':
-            return 1
+        ps_str = 'ps aux |grep %s | grep -v grep' %proc_name
+        cmd_dir = os.popen(ps_str).read().split()
+        if len(cmd_dir) > 0:
+            #print(cmd_dir[-1])
+            if cmd_dir[-1] == app_dir:
+                return 1
+            else:
+                return 0
         else:
             return 0
 
 
+
+
     def restart_proc(self, proc_name):
         '''restart the process that we defined. '''
-        self.log('WatchDog-----GW restart app.py')
-        print('program restart.')
+        self.log('WatchDog-----GW restart %s' % app_dir)
+        #print('program restart.')
 
         ps_str = 'ps aux |grep %s | grep -v grep' % proc_name
         x = os.popen(ps_str).read()
 
-        if x and self.ext == '.py':
-            print('process is functioning normally.')
-        else:
-            #沒有找到特定程序,直接啟動該程序
+        if self.ext == '.py':
             try:
-                self.p = subprocess.Popen(['python3.8', '%s' % self.proc], stdin=sys.stdin, stdout=sys.stdout, stderr=sys.stderr, shell=False)
+                self.p = subprocess.Popen([python_compiler_dir, '%s' % app_dir], stdin=sys.stdin, stdout=sys.stdout, stderr=sys.stderr, shell=False)
             except:
                 pass
 
@@ -61,11 +67,11 @@ def main(object):
     object.log('==== WatchDog boot.====')
     try:
         while 1:
-            if object.watchdog():
+            if object.watchdog() == 0:
                 object.restart_proc(proc_name)
-            else:
-                print('ok, program well')
-            time.sleep(300)
+            #else:
+            #    print('ok, program well')
+            time.sleep(60)
     except KeyboardInterrupt as e:
         object.log('==== WatchDog external interrupt.====')
         print("檢測到CTRL+C，準備退出程序!")
