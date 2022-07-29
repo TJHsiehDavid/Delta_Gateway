@@ -40,6 +40,7 @@ import IPython
 import DateTime
 import os
 import colorama
+from subprocess import check_output
 
 from argparse import ArgumentParser
 import traitlets.config
@@ -103,6 +104,9 @@ COLOR_LIST = [colorama.Fore.MAGENTA, colorama.Fore.CYAN,
               colorama.Fore.BLUE, colorama.Fore.RED]
 COLOR_INDEX = 0
 iPYTHON_FLAG = 0
+
+LOCAL_IP_ADDRESS = str(check_output(['hostname', '--all-ip-addresses']), encoding = "utf-8").strip(' \n').split('.')
+
 
 def configure_logger(device_name):
     global COLOR_INDEX
@@ -465,10 +469,11 @@ def importConfig(dev, configFile=this_file_dir+"/data/LTDMS.json", removeFile=Tr
     localUnicastAddr = int(conf["provisionedData"]["provisioners"][0]["provisionerAddress"], 16)
     # updateConfig("unicastAddress", min(localUnicastAddr, uni) - 1)
 
+
     # 改成寫死 32767 = 7FFF,且不用-1
-    # LoaclAddress(provisioner addr) changed by config.ini.
+    # LoaclAddress(provisioner addr) changed by config.ini + ip addr[-1].
     if gl.get_value('MANUAL_CHANGED') is True:
-        localUnicastAddr = gl.get_value("PROVISIONERADDRESS")
+        localUnicastAddr = gl.get_value("PROVISIONERADDRESS") + int(LOCAL_IP_ADDRESS[-1])
         updateConfig("unicastAddress", min(localUnicastAddr, 32767))
     else:
         updateConfig("unicastAddress", min(localUnicastAddr, 32767))
