@@ -71,6 +71,7 @@ def read_config_ini():
     set_value('server_device_number', device_config['DEFAULT']['server_device_number'])
     set_value('server_device_lost_sec', device_config['DEFAULT'].getint('server_device_lost_sec'))
     set_value('server_device_check_lost_every_sec', device_config['DEFAULT'].getint('server_device_check_lost_every_sec'))
+    set_value('server_device_time_interval_onoff', device_config['DEFAULT'].getint('server_device_time_interval_onoff'))
 
     print("read_config_ini get_value('SUB_STATUS'):"+str( get_value('SUB_STATUS') ))
     print("read_config_ini get_value('MORE_LOG'):"+str( get_value('MORE_LOG') ))
@@ -84,6 +85,7 @@ def read_config_ini():
     print("read_config_ini get_value('server_device_number'):"+str( get_value('server_device_number') ))
     print("read_config_ini get_value('server_device_lost_sec'):"+str( get_value('server_device_lost_sec') ))
     print("read_config_ini get_value('server_device_check_lost_every_sec'):"+str( get_value('server_device_check_lost_every_sec') ))
+    print("read_config_ini get_value('server_device_time_interval_onoff'):" + str(get_value('server_device_time_interval_onoff')))
 
     device_lists = device_config.items( "device_lists" )
     for key, val in device_lists:

@@ -129,6 +129,7 @@ class Interactive(object):
         self.my_sub_group_address_handle_list_map = {}
         self.my_sub_group_list_type_map = {}
         self.callback_group_onoff = None
+        self.callback_switch_onoff = None
         self.callback_group_lightness = None
         self.callback_group_temperature = None
         self.callback_house_open_door = None
@@ -138,7 +139,9 @@ class Interactive(object):
         self.house_open_door = {}
         self.house_open_door_time = {}
 
-        self.set_interval(self.check_lost_device , gl.get_value("server_device_check_lost_every_sec") )
+        # onoff timeinterval thread
+        if gl.get_value("server_device_time_interval_onoff"):
+            self.set_interval(self.check_lost_device, gl.get_value("server_device_check_lost_every_sec") )
 
     def set_my_sub_group_list(self, my_sub_group_list_new):
         self.my_sub_group_list = my_sub_group_list_new.copy()
@@ -160,11 +163,20 @@ class Interactive(object):
     def set_callback_group_onoff(self, callback):
         self.callback_group_onoff = callback
 
+    def set_callback_switch_onoff(self, callback):
+        self.set_callback_switch_onoff = callback
+
     def set_callback_group_lightness(self, callback):
         self.callback_group_lightness = callback
 
+    def set_callback_switch_lightness(self, callback):
+        self.set_callback_switch_lightness = callback
+
     def set_callback_group_temperature(self, callback):
         self.callback_group_temperature = callback
+
+    def set_callback_switch_temperature(self, callback):
+        self.set_callback_switch_temperature = callback
 
     def set_callback_house_open_door(self, callback):
         self.callback_house_open_door = callback
@@ -441,11 +453,11 @@ class Interactive(object):
                             print("my ON_OFF:" + str(result_map))
                             print("group onOff address:" + str(dst_group_address_id))
 
-                        if self.callback_group_onoff is not None:
-                            self.callback_group_onoff(result_map["on_off"], data, result_map["src"], dst_group_address_id)
+                        if self.set_callback_switch_onoff is not None:
+                            self.set_callback_switch_onoff(result_map["on_off"], data, result_map["src"], dst_group_address_id)
                         else:
                             if gl.get_value('MORE_LOG'):
-                                print("callback_group_onoff is None")
+                                print("set_callback_switch_onoff is None")
 
 
                     else:
@@ -558,7 +570,6 @@ def configure_logger(device_name):
             if gl.get_value('MORE_LOG'):
                 print("configure_logger device_name0:" + device_name + " need_pop:" + str(need_pop) + " handlers:" + str(len(logger.handlers)))
             logger.handlers.pop()
-
 
 
     return logger
