@@ -139,7 +139,7 @@ class Interactive(object):
         self.house_open_door = {}
         self.house_open_door_time = {}
 
-        # onoff timeinterval thread
+        # onoff time interval thread
         if gl.get_value("server_device_time_interval_onoff"):
             self.set_interval(self.check_lost_device, gl.get_value("server_device_check_lost_every_sec") )
 
@@ -270,8 +270,8 @@ class Interactive(object):
 
             if self.PRINT_ALL_EVENTS and event is not None:
                 # 处理client subscription数据
-                #if isinstance(event, evt.MeshMessageReceivedSubscription):
-                if(event._event_name == "MeshMessageReceivedSubscription"):
+                if isinstance(event, evt.MeshMessageReceivedSubscription):
+                #if(event._event_name == "MeshMessageReceivedSubscription"):
                     unicast_address = event._data['src']
                     ttl = event._data['ttl']
                     act_length = event._data["actual_length"]
@@ -408,12 +408,12 @@ class Interactive(object):
 
 
                     #安房 date:52 40 08 0x  //and int(data[1],16) == 64 and int(data[2],16) == 8 中間兩碼不用檢查
-                    elif act_length ==4 and int(data[0], 16) == 82:
+                    elif act_length == 4 and int(data[0], 16) == 82:
                         open_door = int(data[3], 16)
-                        self.house_open_door_time[unicast_address] = time.time()
-                        if unicast_address in self.house_open_door:
-                            if self.house_open_door[unicast_address] != open_door or self.house_open_door[unicast_address] == open_door:
-                                self.house_open_door[unicast_address] = open_door
+                        self.house_open_door_time[str(unicast_address)] = time.time()
+                        if str(unicast_address) in self.house_open_door:
+                            if self.house_open_door[str(unicast_address)] != open_door:
+                                self.house_open_door[str(unicast_address)] = open_door
                                 result_map["open_door"] = open_door
                                 if gl.get_value('MORE_LOG'):
                                     print("open_door result_map:" + str(result_map))
@@ -421,13 +421,14 @@ class Interactive(object):
                                     print("open_door:" + str(open_door))
                                 if self.callback_house_open_door is not None:
                                     self.callback_house_open_door(open_door, unicast_address)
+                        # First been searched will enter else.
                         else:
-                            self.house_open_door[unicast_address] = open_door
+                            self.house_open_door[str(unicast_address)] = open_door
                             result_map["open_door"] = open_door
                             if gl.get_value('MORE_LOG'):
-                                print("open_door result_map:" + str(result_map))
+                                print("First open_door result_map:" + str(result_map))
                                 print("unicast_address:" + str(unicast_address))
-                                print("open_door:" + str(open_door))
+                                print("First open_door:" + str(open_door))
                             if self.callback_house_open_door is not None:
                                 self.callback_house_open_door(open_door, unicast_address)
 
@@ -458,6 +459,11 @@ class Interactive(object):
                         else:
                             if gl.get_value('MORE_LOG'):
                                 print("set_callback_switch_onoff is None")
+
+                    # Collected EddyStone TLM Beacon
+                    #elif act_length == 11 and (int(data[0], 16) == 2 and int(data[1], 16) == 32):
+                    #    if gl.get_value('MORE_LOG'):
+
 
 
                     else:
