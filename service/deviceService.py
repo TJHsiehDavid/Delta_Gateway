@@ -404,7 +404,7 @@ class DeviceService():
         # dic_hour_value[0]: is the closest log from now
         # EX: (if got 2 hours info from fw)
           now is 16:30
-          dic_hour_value[0] = 16:00 ~ 16:30's log
+          dic_hour_value[0] = 16:00 ~ 16:30's log <--- right now
           dic_hour_value[1] = 15:00 ~ 16:00's log <--- not changed
         '''
         if gl.get_value('MORE_LOG'):
@@ -705,6 +705,7 @@ class DeviceService():
             print("callback_energy_log powerRatio is: ", powerRatio[str(src_address)])
 
         # power walt correspond to PID
+        # 15W , 35W , default = 40W
         if compositionData[str(src_address)]['productId'] == 3:
             maxPower = 15
         elif compositionData[str(src_address)]['productId'] == 4:
@@ -713,11 +714,11 @@ class DeviceService():
             maxPower = 40
 
         # Power depend on ratio if is qualified.
-        if powerRatio[str(src_address)] > 0 and powerRatio[str(src_address)] <= 100:
+        if powerRatio[str(src_address)] > 0 and powerRatio[str(src_address)] <= 100 and powerRatio != {}:
             maxPower = maxPower * powerRatio[str(src_address)]/100
 
         for i in range(hours):
-            bData[str(src_address)]['hours']['value'][i] = bData[str(src_address)]['hours']['value'][i] * maxPower * 1000 / (100*60*60)
+            bData[str(src_address)]['hours']['value'][i] = round(bData[str(src_address)]['hours']['value'][i] * maxPower * 1000 / (100*60*60), 2)
 
         self.call_Energy_log_API(src_address, bData[str(src_address)]['hours']['value'])
 
@@ -4255,12 +4256,11 @@ class DeviceService():
             lc = self.getLsbuClient()
 
             retry = 5
-            timeout = 100
+            timeout = 3
             retrySleep = 0.1
             for i in range(0, retry):
                 try:
                     lc.publish_set(0, address_handle)
-
 
                     ''' Get device composition data(product id, version id, fw version) and store in dictionary named
                         "devicePublishInfoDict". '''
@@ -4271,7 +4271,7 @@ class DeviceService():
                         feedback = 5
                         lc.requestCompositionData(feedback)
 
-                        result_data = self.getRespData(data_key_ary, lc, timeout)
+                        result_data = self.getRespData(data_key_ary, lc, timeout - 1)
                         if result_data != {}:
                             print("get Lsbu composition data ok:")
                         else:
@@ -4302,7 +4302,7 @@ class DeviceService():
                     if result_data != {}:
                         print("getLsbuEnergy ok:")
                         flagOfstatus = False
-                        self.callback_energy_log(id, hours, lc.last_cmd_resp_dict[data_key_ary[0]], lc.devicePublishInfoDict, lc.deviceMaxPowerRatioDict)
+                        # self.callback_energy_log(id, hours, lc.last_cmd_resp_dict[data_key_ary[0]], lc.devicePublishInfoDict, lc.deviceMaxPowerRatioDict)
                         break
                     else:
                         time.sleep(retrySleep)

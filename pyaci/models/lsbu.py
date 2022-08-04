@@ -91,10 +91,11 @@ class LsbuClient(Model):
         hoursData[str(dongleUnicastAddress)]['hours']['byte'] = {}
         hoursData[str(dongleUnicastAddress)]['hours']['value'] = {}
 
-        j = dataLength / 4 - 1
+        hours = int(dataLength / 4)
+        j = int(dataLength / 4 - 1)
         for i in range(0, dataLength, 4):
-            hoursData[str(dongleUnicastAddress)]['hours']['byte'][j] = bData[i : 4+i]
-            hoursData[str(dongleUnicastAddress)]['hours']['value'][j] = int.from_bytes(hoursData[str(dongleUnicastAddress)]['hours']['byte'][j], byteorder='big')
+            hoursData[str(dongleUnicastAddress)]['hours']['byte'][str(j)] = bData[i : 4+i]
+            hoursData[str(dongleUnicastAddress)]['hours']['value'][str(j)] = int.from_bytes(hoursData[str(dongleUnicastAddress)]['hours']['byte'][str(j)], byteorder='big')
             j -= 1
 
 
@@ -112,7 +113,7 @@ class LsbuClient(Model):
             self.last_cmd_resp_dict[str(message.meta['src'])+"Energy"] = hoursData
 
 
-            #self.callback_energy_log(dongleUnicastAddress, hoursData)
+            self.callback_energy_log(dongleUnicastAddress, hours, hoursData, self.devicePublishInfoDict, self.deviceMaxPowerRatioDict)
 
 
 
