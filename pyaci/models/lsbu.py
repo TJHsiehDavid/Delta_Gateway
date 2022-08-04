@@ -11,32 +11,33 @@ from mesh import types as mt                            # NOQA: ignore unused im
 
 
 class LsbuClient(Model):
-    _LSBU_SETTING_SET       =   Opcode(0xC0, 0x069E, "Delta LSBU Set")
-    _LSBU_SETTING_GET       =   Opcode(0xC1, 0x069E, "Delta LSBU Get")
-    _LSBU_SETTING_STATUS    =   Opcode(0xC2, 0x069E, "Delta LSBU Status")
-    _LSBU_RESET_TO_FACTORY  =   Opcode(0xC7, 0x069E, "Delta LSBU Reset To Factory")
-    _LSBU_ENTER_DFU_MODE    =   Opcode(0xC8, 0x069E, "Delta LSBU Enter DFU Mode")
-    _LSBU_FDT_DFU_STATUS    =   Opcode(0xC9, 0x069E, "Delta LSBU FDT DFU Status")
+    _LSBU_SETTING_SET       = Opcode(0xC0, 0x069E, "Delta LSBU Set")
+    _LSBU_SETTING_GET       = Opcode(0xC1, 0x069E, "Delta LSBU Get")
+    _LSBU_SETTING_STATUS    = Opcode(0xC2, 0x069E, "Delta LSBU Status")
+    _LSBU_RESET_TO_FACTORY  = Opcode(0xC7, 0x069E, "Delta LSBU Reset To Factory")
+    _LSBU_ENTER_DFU_MODE    = Opcode(0xC8, 0x069E, "Delta LSBU Enter DFU Mode")
+    _LSBU_FDT_DFU_STATUS    = Opcode(0xC9, 0x069E, "Delta LSBU FDT DFU Status")
 
-    # _LSBU_EZCONFIG_REQUEST_PUBLISH    =   Opcode(0xCA, 0x069E, "Delta LSBU EzConfig Request Publish")
-    _LSBU_EZCONFIG_REQUEST_PUBLISH_STATUS    =   Opcode(0xCB, 0x069E, "Delta LSBU EzConfig Request Publish Status")
-    # _LSBU_SW3_SCENE_NUMBER_SET    =   Opcode(0xCD, 0x069E, "Delta LSBU SW3 Scene Number Set")
-    # _LSBU_SW3_SCENE_NUMBER_GET    =   Opcode(0xCE, 0x069E, "Delta LSBU SW3 Scene Number Get")
-    # _LSBU_SW3_SCENE_NUMBER_STATUS    =   Opcode(0xCF, 0x069E, "Delta LSBU SW3 Scene Number Status")
-    # _LSBU_EZCONFIG_GROUP_SUBSCRIBE_STATUS    =   Opcode(0xD0, 0x069E, "Delta LSBU EzConfig Group Subscribe Status")
-    _LSBU_EZCONFIG_REQUEST_COMPOSITION_DATA    =   Opcode(0xD1, 0x069E, "Delta LSBU EzConfig Request Composition Data")
-    _LSBU_EZCONFIG_REQUEST_COMPOSITION_DATA_STATUS    =   Opcode(0xD2, 0x069E, "Delta LSBU EzConfig Request Composition Data Status")
-    _LSBU_SET_TIME_PERIOD_OF_ENERGY_LOG_DATA = Opcode(0xD5, 0x069E, "Delta LSBU energy log Data")
-    _LSBU_ENERGY_LOG_DATA_STATUS = Opcode(0xD6, 0x069E, "Delta LSBU energy log Data status")
+    # _LSBU_EZCONFIG_REQUEST_PUBLISH                  = Opcode(0xCA, 0x069E, "Delta LSBU EzConfig Request Publish")
+    _LSBU_EZCONFIG_REQUEST_PUBLISH_STATUS           = Opcode(0xCB, 0x069E, "Delta LSBU EzConfig Request Publish Status")
+    # _LSBU_SW3_SCENE_NUMBER_SET                    = Opcode(0xCD, 0x069E, "Delta LSBU SW3 Scene Number Set")
+    # _LSBU_SW3_SCENE_NUMBER_GET                    = Opcode(0xCE, 0x069E, "Delta LSBU SW3 Scene Number Get")
+    # _LSBU_SW3_SCENE_NUMBER_STATUS                 = Opcode(0xCF, 0x069E, "Delta LSBU SW3 Scene Number Status")
+    # _LSBU_EZCONFIG_GROUP_SUBSCRIBE_STATUS         = Opcode(0xD0, 0x069E, "Delta LSBU EzConfig Group Subscribe Status")
+    _LSBU_EZCONFIG_REQUEST_COMPOSITION_DATA         = Opcode(0xD1, 0x069E, "Delta LSBU EzConfig Request Composition Data")
+    _LSBU_EZCONFIG_REQUEST_COMPOSITION_DATA_STATUS  = Opcode(0xD2, 0x069E, "Delta LSBU EzConfig Request Composition Data Status")
+    _LSBU_SET_TIME_PERIOD_OF_ENERGY_LOG_DATA        = Opcode(0xD5, 0x069E, "Delta LSBU energy log Data")
+    _LSBU_ENERGY_LOG_DATA_STATUS                    = Opcode(0xD6, 0x069E, "Delta LSBU energy log Data status")
+
 
     def __init__(self):
         self.opcodes = [
-            (self._LSBU_SETTING_STATUS   , self.__lsbu_setting_status_handler),
-            (self._LSBU_FDT_DFU_STATUS   , self.__lsbu_fdt_dfu_status_handler),
-            (self._LSBU_EZCONFIG_REQUEST_PUBLISH_STATUS   , self.__lsbu_ezconfig_request_publish_status_handler),
-            # (self._LSBU_EZCONFIG_GROUP_SUBSCRIBE_STATUS   , self.__lsbu_ezconfig_group_subscribe_status_handler),
-            (self._LSBU_EZCONFIG_REQUEST_COMPOSITION_DATA_STATUS   , self.__lsbu_ezconfig_request_composition_data_status_handler),
-            (self._LSBU_ENERGY_LOG_DATA_STATUS   , self.__lsbu_energy_log_data_status_handler)]
+            (self._LSBU_SETTING_STATUS,  self.__lsbu_setting_status_handler),
+            (self._LSBU_FDT_DFU_STATUS,  self.__lsbu_fdt_dfu_status_handler),
+            (self._LSBU_EZCONFIG_REQUEST_PUBLISH_STATUS,  self.__lsbu_ezconfig_request_publish_status_handler),
+            # (self._LSBU_EZCONFIG_GROUP_SUBSCRIBE_STATUS,  self.__lsbu_ezconfig_group_subscribe_status_handler),
+            (self._LSBU_EZCONFIG_REQUEST_COMPOSITION_DATA_STATUS,  self.__lsbu_ezconfig_request_composition_data_status_handler),
+            (self._LSBU_ENERGY_LOG_DATA_STATUS,  self.__lsbu_energy_log_data_status_handler)]
 
         self.__isDFUReset = ""
         # cesar 20190827 记录本次操作nodeUUID 用于恢复出厂设置与进入DFU模式
@@ -48,11 +49,18 @@ class LsbuClient(Model):
         super(LsbuClient, self).__init__(self.opcodes)
 
         self.last_cmd_resp_dict = {}
+        self.devicePublishInfoDict = {}
+        self.deviceMaxPowerRatioDict = {}
 
         self.callback_energy_log = None
 
     def __lsbu_ezconfig_request_publish_status_handler(self, opcode, message):
         dongleUnicastAddress = message.meta['src']
+        devicePublishInfoDict = {}
+        devicePublishInfoDict['productId'] = message.data[1] * 256 + message.data[0]
+        devicePublishInfoDict['VersionId'] = message.data[3] * 256 + message.data[2]
+        devicePublishInfoDict['fwVersion'] = message.data[7] | message.data[6] >> 2 | message.data[5] >> 4 | message.data[4] >> 6
+
         logstr = "Source Address: " + str(dongleUnicastAddress)
         logstr += ", ProductId:" + str(message.data[1] * 256 + message.data[0])
         logstr += ", VersionId:" + str(message.data[3] * 256 + message.data[2])
@@ -78,14 +86,15 @@ class LsbuClient(Model):
         bData = message.data[::-1]
 
         hoursData = {}
-        hoursData['hours'] = {}
-        hoursData['hours']['byte'] = {}
-        hoursData['hours']['value'] = {}
+        hoursData[str(dongleUnicastAddress)] = {}
+        hoursData[str(dongleUnicastAddress)]['hours'] = {}
+        hoursData[str(dongleUnicastAddress)]['hours']['byte'] = {}
+        hoursData[str(dongleUnicastAddress)]['hours']['value'] = {}
 
         j = dataLength / 4 - 1
         for i in range(0, dataLength, 4):
-            hoursData['hours']['byte'][j] = bData[i : 4+i]
-            hoursData['hours']['value'][j] = int.from_bytes(hoursData['hours']['byte'][j], byteorder='big')
+            hoursData[str(dongleUnicastAddress)]['hours']['byte'][j] = bData[i : 4+i]
+            hoursData[str(dongleUnicastAddress)]['hours']['value'][j] = int.from_bytes(hoursData[str(dongleUnicastAddress)]['hours']['byte'][j], byteorder='big')
             j -= 1
 
 
@@ -103,7 +112,8 @@ class LsbuClient(Model):
             self.last_cmd_resp_dict[str(message.meta['src'])+"Energy"] = hoursData
 
 
-            self.callback_energy_log(dongleUnicastAddress, hoursData)
+            #self.callback_energy_log(dongleUnicastAddress, hoursData)
+
 
 
     def requestCompositionData(self, resp_times):
@@ -122,6 +132,12 @@ class LsbuClient(Model):
         logstr += ", ProductId:" + str(message.data[1] * 256 + message.data[0])
         logstr += ", VersionId:" + str(message.data[3] * 256 + message.data[2])
         logstr += ", FW_Version:" + str(message.data[7]) + "." + str(message.data[6]) + "." + str(message.data[5]) + "." + str(message.data[4])
+
+        self.devicePublishInfoDict[str(dongleUnicastAddress)] = {}
+        self.devicePublishInfoDict[str(dongleUnicastAddress)]['productId'] = message.data[1] * 256 + message.data[0]
+        self.devicePublishInfoDict[str(dongleUnicastAddress)]['VersionId'] = message.data[3] * 256 + message.data[2]
+        self.devicePublishInfoDict[str(dongleUnicastAddress)]['fwVersion'] = int(str(message.data[7]) + str(message.data[6]) + str(message.data[5]) + str(message.data[4]))
+        self.last_cmd_resp_dict[str(message.meta['src']) + "compositionData"] = self.devicePublishInfoDict
         self.logger.info(logstr)
 
     def settingGet(self, propertyID):
@@ -278,6 +294,14 @@ class LsbuClient(Model):
                         isDeleted = True
                         break
                 print("Delete Group 0x" + data[4] + data[3] + (" Success!" if isDeleted else " Failed!"))
+            # Max mA and Power
+            elif data[0] == "06":
+                bRatio = message.data[3] & 0x7f
+                self.deviceMaxPowerRatioDict[str(dongleUnicastAddress)] = bRatio
+                self.last_cmd_resp_dict[str(message.meta['src']) + "PowerRatio"] = self.deviceMaxPowerRatioDict
+
+
+
 
     def resetToFactory(self, deviceID):
         isValid = True

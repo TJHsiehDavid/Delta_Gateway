@@ -409,6 +409,7 @@ class DeviceService():
         '''
         if gl.get_value('MORE_LOG'):
             print("call_Energy_log_API hour value: ", dic_hour_value[0])
+            print("call_Energy_log_API hour value: ", dic_hour_value[1])
 
         #todo
 
@@ -590,11 +591,135 @@ class DeviceService():
                 if gl.get_value('MORE_LOG'):
                     print("updateDeviceInfo temperature ok")
 
-    def callback_energy_log(self, src_address, bData):
+    def callback_switch_onoff(self,on_off, data, src_unicast_addr, dst_address_id):
+        transition_time_value = int(data[4], 16)
+        repeat_value = 5
+        ack = 0
+
+        device = self.getDeviceInfoData(src_unicast_addr)
+        if gl.get_value('MORE_LOG'):
+            print('callback_switch_onoff device_name: ', device.name)
+            print('callback_switch_onoff on_off: ', on_off )
+            print('callback_switch_onoff src_unicast_addr: ', str(src_unicast_addr))
+            print('callback_switch_onoff dst_address_id: ', str(dst_address_id))
+
+        time.sleep(1)
+
+
+        #temporary marked for debug
+        group_info_data = self.setGroupOnOff(int(dst_address_id), on_off, transition_time_value, repeat_value, ack)
+        if group_info_data.switch_state:
+            print('set group onoff on is ok')
+        else:
+            print('set group onoff off is ok')
+
+
+        ''' Update the lastest state to database. '''
+        group = self.getGroupInfoData(dst_address_id)
+        if on_off == 1:
+            group.switch_state = True
+        else:
+            group.switch_state = False
+        self.updateGroupInfo(group)
+        if gl.get_value('MORE_LOG'):
+            print("updateGroupInfo on_off ok")
+
+        group2 = self.getGroup(dst_address_id)
+        devices = [device for device in group2['device']
+                   if device['inUse'] == True]
+        for device in devices:
+            if gl.get_value('MORE_LOG'):
+                print("device.id:" + str(device["id"]) )
+            device2 = self.getDeviceInfoData(device["id"])
+            if device2 is not None:
+                if on_off == 1:
+                    device2.switch_state = 1
+                else:
+                    device2.switch_state = 0
+                self.updateDeviceInfo(device2)
+                if gl.get_value('MORE_LOG'):
+                    print("updateDeviceInfo on_off ok")
+
+
+    def callback_switch_lightness(self,lightness,address_id):
+        if gl.get_value('MORE_LOG'):
+            print('callback_switch_lightness lightness: ', lightness )
+            print('callback_switch_lightness address_id: ', str(address_id) )
+        lightness_per = int(255*(lightness + 32768)/65535)
+        if gl.get_value('MORE_LOG'):
+            print("lightness_per:"+str(lightness_per))
+        group = self.getGroupInfoData(address_id)
+        group.dimming_value = lightness_per
+        self.updateGroupInfo(group)
+        if gl.get_value('MORE_LOG'):
+            print("updateGroupInfo lightness ok")
+
+        group2 = self.getGroup(  address_id )
+        devices = [device for device in group2['device']
+                   if device['inUse'] == True]
+        for device in devices:
+            if gl.get_value('MORE_LOG'):
+                print( "device.id:"+ str(device["id"]) )
+            device2 = self.getDeviceInfoData(device["id"])
+            if device2 is not None:
+                device2.dimming_value = lightness_per
+                self.updateDeviceInfo(device2)
+                if gl.get_value('MORE_LOG'):
+                    print("updateDeviceInfo lightness ok")
+
+
+    def callback_switch_temperature(self,temperature,address_id):
+        if gl.get_value('MORE_LOG'):
+            print('callback_switch_temperature temperature: ', temperature )
+            print('callback_switch_temperature address_id: ', str(address_id) )
+        temperature_per = int(255*(temperature + 32768)/65535)
+        if gl.get_value('MORE_LOG'):
+            print("temperature_per:"+str(temperature_per))
+        group_obj = self.getGroupByAddress(address_id)
+        if group_obj.sub_group1 == None:
+            return
+        group = self.getGroupInfoData(address_id)
+        group.color_value = temperature_per
+        self.updateGroupInfo(group)
+        if gl.get_value('MORE_LOG'):
+            print("updateGroupInfo temperature ok")
+
+        group2 = self.getGroup(  address_id )
+        devices = [device for device in group2['device']
+                   if device['inUse'] == True]
+        for device in devices:
+            if gl.get_value('MORE_LOG'):
+                print( "device.id:"+ str(device["id"]) )
+            device2 = self.getDeviceInfoData(device["id"])
+            if device2 is not None:
+                device2.color_value = temperature_per
+                self.updateDeviceInfo(device2)
+                if gl.get_value('MORE_LOG'):
+                    print("updateDeviceInfo temperature ok")
+
+
+    def callback_energy_log(self, src_address, hours, bData, compositionData, powerRatio):
         if gl.get_value('MORE_LOG'):
             print("callback_energy_log unicast address is: ", src_address)
+            print("callback_energy_log composition PID is: ", compositionData[str(src_address)]['productId'])
+            print("callback_energy_log powerRatio is: ", powerRatio[str(src_address)])
 
-        self.call_Energy_log_API(src_address, bData['hours']['value'])
+        # power walt correspond to PID
+        if compositionData[str(src_address)]['productId'] == 3:
+            maxPower = 15
+        elif compositionData[str(src_address)]['productId'] == 4:
+            maxPower = 35
+        else:
+            maxPower = 40
+
+        # Power depend on ratio if is qualified.
+        if powerRatio[str(src_address)] > 0 and powerRatio[str(src_address)] <= 100:
+            maxPower = maxPower * powerRatio[str(src_address)]/100
+
+        for i in range(hours):
+            bData[str(src_address)]['hours']['value'][i] = bData[str(src_address)]['hours']['value'][i] * maxPower * 1000 / (100*60*60)
+
+        self.call_Energy_log_API(src_address, bData[str(src_address)]['hours']['value'])
 
 
 
@@ -663,6 +788,10 @@ class DeviceService():
         self.device.set_callback_group_onoff(self.callback_group_onoff)
         self.device.set_callback_group_lightness(self.callback_group_lightness)
         self.device.set_callback_group_temperature(self.callback_group_temperature)
+        # switch control server.
+        self.device.set_callback_switch_onoff(self.callback_switch_onoff)
+        self.device.set_callback_switch_lightness(self.callback_switch_lightness)
+        self.device.set_callback_switch_temperature(self.callback_switch_temperature)
 
         self.device.set_callback_house_open_door(self.callback_house_open_door)
         self.device.set_callback_iBeacon_sensor_info(self.callback_iBeacon_sensor_info)
@@ -4126,13 +4255,46 @@ class DeviceService():
             lc = self.getLsbuClient()
 
             retry = 5
-            timeout = 3
+            timeout = 100
             retrySleep = 0.1
             for i in range(0, retry):
                 try:
                     lc.publish_set(0, address_handle)
+
+
+                    ''' Get device composition data(product id, version id, fw version) and store in dictionary named
+                        "devicePublishInfoDict". '''
+                    if str(id) not in lc.devicePublishInfoDict:
+                        data_key_ary = [str(id) + "compositionData"]
+                        self.clearRespData(data_key_ary, lc)
+
+                        feedback = 5
+                        lc.requestCompositionData(feedback)
+
+                        result_data = self.getRespData(data_key_ary, lc, timeout)
+                        if result_data != {}:
+                            print("get Lsbu composition data ok:")
+                        else:
+                            time.sleep(retrySleep)
+
+                    ''' Get the power ratio.
+                        Get the max mA and calculate the max Power walt. '''
+                    if str(id) not in lc.deviceMaxPowerRatioDict:
+                        data_key_ary = [str(id) + "PowerRatio"]
+                        self.clearRespData(data_key_ary, lc)
+
+                        lc.settingGet(0x0006)
+
+                        result_data = self.getRespData(data_key_ary, lc, timeout)
+                        if result_data != {}:
+                            print("get Lsbu PowerRatio data ok:")
+                        else:
+                            time.sleep(retrySleep)
+
+                    ''' Get the energy log from device which is raw data. '''
                     data_key_ary = [str(id) + "Energy"]
                     self.clearRespData(data_key_ary, lc)
+
                     lc.set(propertyID, hours, transition_time_ms=transition_time, repeat=repeat)
 
                     result_data = self.getRespData(data_key_ary, lc, timeout)
@@ -4140,7 +4302,7 @@ class DeviceService():
                     if result_data != {}:
                         print("getLsbuEnergy ok:")
                         flagOfstatus = False
-                        #self.callback_energy_log(id, lc.last_cmd_resp_dict[data_key_ary[0]])
+                        self.callback_energy_log(id, hours, lc.last_cmd_resp_dict[data_key_ary[0]], lc.devicePublishInfoDict, lc.deviceMaxPowerRatioDict)
                         break
                     else:
                         time.sleep(retrySleep)
