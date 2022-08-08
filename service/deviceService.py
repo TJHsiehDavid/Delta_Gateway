@@ -1521,6 +1521,7 @@ class DeviceService():
         for a_device in self.db.deviceInfo:
             if a_device.unicast_address == address:
                 return a_device
+        return None
 
     def updateDeviceInfo(self, device):
         for index, x in enumerate(self.db.deviceInfo):
@@ -4317,6 +4318,8 @@ class DeviceService():
                 'repeat': repeat,
                 'timeout': True if flagOfstatus is True else False,
                 'state': {
+                    'productId': lc.devicePublishInfoDict[str(id)]['productId'],
+                    'ratio': lc.deviceMaxPowerRatioDict[str(id)],
                     'data': lc.last_cmd_resp_dict[data_key_ary[0]]
                     }
                 }

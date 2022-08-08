@@ -412,7 +412,7 @@ class Interactive(object):
                         open_door = int(data[3], 16)
                         self.house_open_door_time[str(unicast_address)] = time.time()
                         if str(unicast_address) in self.house_open_door:
-                            if self.house_open_door[str(unicast_address)] != open_door:
+                            if self.house_open_door[str(unicast_address)] != open_door and (open_door == 0 or open_door == 1):
                                 self.house_open_door[str(unicast_address)] = open_door
                                 result_map["open_door"] = open_door
                                 if gl.get_value('MORE_LOG'):
