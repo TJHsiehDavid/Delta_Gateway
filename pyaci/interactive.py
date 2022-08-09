@@ -140,8 +140,12 @@ class Interactive(object):
         self.house_open_door_time = {}
 
         # onoff time interval thread
-        if gl.get_value("server_device_time_interval_onoff"):
+        if gl.get_value("server_device_check_lost_onoff"):
             self.set_interval(self.check_lost_device, gl.get_value("server_device_check_lost_every_sec") )
+
+        # onoff device cadence time interval thread
+        if gl.get_value("server_device_cadence_time_interval_onoff"):
+            self.set_interval(self.update_device_cadence, gl.get_value("server_device_cadence_interval"))
 
     def set_my_sub_group_list(self, my_sub_group_list_new):
         self.my_sub_group_list = my_sub_group_list_new.copy()
@@ -270,8 +274,8 @@ class Interactive(object):
 
             if self.PRINT_ALL_EVENTS and event is not None:
                 # 处理client subscription数据
-                if isinstance(event, evt.MeshMessageReceivedSubscription):
-                #if(event._event_name == "MeshMessageReceivedSubscription"):
+                #if isinstance(event, evt.MeshMessageReceivedSubscription):
+                if(event._event_name == "MeshMessageReceivedSubscription"):
                     unicast_address = event._data['src']
                     ttl = event._data['ttl']
                     act_length = event._data["actual_length"]
@@ -543,6 +547,22 @@ class Interactive(object):
                         print("check_lost_device lost:", key)
                     if self.callback_house_open_door is not None:
                         self.callback_house_open_door(0, key)
+
+
+    def update_device_cadence(self):
+        time_2 = time.time()
+        for key in self.house_open_door:
+            if gl.get_value('MORE_LOG'):
+                print('Cadence: ', key, '->', self.house_open_door[key])
+            time_interval = time_2 - self.house_open_door_time[key]
+            if gl.get_value('MORE_LOG'):
+                print('Cadence: ', key, ' time_interval: ', time_interval)
+            if time_interval < gl.get_value("server_device_lost_sec"):
+                if gl.get_value('MORE_LOG'):
+                    print("update_device_cadence: ", key)
+                if self.callback_house_open_door is not None:
+                    self.callback_house_open_door(self.house_open_door[key], key)
+
 
 def configure_logger(device_name):
     '''global options '''
