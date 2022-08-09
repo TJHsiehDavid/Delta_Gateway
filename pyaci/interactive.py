@@ -274,8 +274,8 @@ class Interactive(object):
 
             if self.PRINT_ALL_EVENTS and event is not None:
                 # 处理client subscription数据
-                #if isinstance(event, evt.MeshMessageReceivedSubscription):
-                if(event._event_name == "MeshMessageReceivedSubscription"):
+                if isinstance(event, evt.MeshMessageReceivedSubscription):
+                #if(event._event_name == "MeshMessageReceivedSubscription"):
                     unicast_address = event._data['src']
                     ttl = event._data['ttl']
                     act_length = event._data["actual_length"]
@@ -416,7 +416,7 @@ class Interactive(object):
                         open_door = int(data[3], 16)
                         self.house_open_door_time[str(unicast_address)] = time.time()
                         if str(unicast_address) in self.house_open_door:
-                            if self.house_open_door[str(unicast_address)] != open_door and (open_door == 0 or open_door == 1):
+                            if self.house_open_door[str(unicast_address)] != open_door:
                                 self.house_open_door[str(unicast_address)] = open_door
                                 result_map["open_door"] = open_door
                                 if gl.get_value('MORE_LOG'):
