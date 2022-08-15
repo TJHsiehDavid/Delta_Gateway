@@ -41,6 +41,7 @@ import globalvar as gl
 
 import requests
 from requests.auth import HTTPBasicAuth
+from requests.adapters import HTTPAdapter
 
 #控燈後是否會寫回狀態(True:會寫入DB,False:不會寫入DB)
 testSaveDb = gl.get_value('testSaveDb')
@@ -173,6 +174,14 @@ class DeviceService():
 
         self.server_need_login = True
         self.server_password_base64 = ""
+
+        self.response = None
+        self.resp_login = requests.Session()
+        self.resp_login.mount('http://', HTTPAdapter(max_retries=3))
+        self.resp_get = requests.Session()
+        self.resp_get.mount('http://', HTTPAdapter(max_retries=3))
+        self.resp_put = requests.Session()
+        self.resp_put.mount('http://', HTTPAdapter(max_retries=3))
 
     def clear_dataDao(self):
         if self.dataDao is not None:
@@ -340,26 +349,32 @@ class DeviceService():
     # 安房
     def call_house_API(self, object_reference, api_value):
         fake_json = False
+        '''
+        # Log in only need once, and it has been connected to the server, so when send command
+        # like request.Get, Put... will not cause log out otherwise will occur log out everytime. '''
         if self.server_need_login:
-            server_password = gl.get_value("server_username")+":"+gl.get_value("server_password")
-            self.server_password_base64 = (base64.b64encode(server_password.encode("UTF-8"))).decode("UTF-8")
-            if gl.get_value('MORE_LOG'):
-                print("server_password_base64", self.server_password_base64)
-            # resp = requests.get("http://" + gl.get_value("server_ip") + "/enteliweb/api/auth/basiclogin?alt=json",
-            #     auth=HTTPBasicAuth("Basic", self.server_password_base64))
-            resp = requests.get("http://" + gl.get_value("server_ip") + "/enteliweb/api/auth/basiclogin?alt=json",
-                auth=HTTPBasicAuth(gl.get_value("server_username"), gl.get_value("server_password")))
-            if gl.get_value('MORE_LOG'):
-                print("get basiclogin:", resp.status_code, resp.text)
-            resp_text = resp.text
-            if fake_json:
-                resp_text = '{"$base":"String","value":"OK","_csrfToken":"ZBKkZQFfGoawDn42Jg0OmxV4OQ4nFxH6UEMNnW3E"}'
-            resp_json = json.loads(resp_text)
-            if gl.get_value('MORE_LOG'):
-                print("resp_json value:", resp_json["value"])
-            if resp_json["value"] == "OK":
-                self.server_need_login = False
-
+            self.response = None
+            try:
+                server_password = gl.get_value("server_username")+":"+gl.get_value("server_password")
+                self.server_password_base64 = (base64.b64encode(server_password.encode("UTF-8"))).decode("UTF-8")
+                if gl.get_value('MORE_LOG'):
+                    print("server_password_base64", self.server_password_base64)
+                # resp = requests.get("http://" + gl.get_value("server_ip") + "/enteliweb/api/auth/basiclogin?alt=json",
+                #     auth=HTTPBasicAuth("Basic", self.server_password_base64))
+                self.response = self.resp_login.get("http://" + gl.get_value("server_ip") + "/enteliweb/api/auth/basiclogin?alt=json",
+                    auth=HTTPBasicAuth(gl.get_value("server_username"), gl.get_value("server_password")))
+                if gl.get_value('MORE_LOG'):
+                    print("get basiclogin:", self.response.status_code, self.response.text)
+                resp_text = self.response.text
+                if fake_json:
+                    resp_text = '{"$base":"String","value":"OK","_csrfToken":"ZBKkZQFfGoawDn42Jg0OmxV4OQ4nFxH6UEMNnW3E"}'
+                resp_json = json.loads(resp_text)
+                if gl.get_value('MORE_LOG'):
+                    print("resp_json value:", resp_json["value"])
+                if resp_json["value"] == "OK":
+                    self.server_need_login = False
+            except requests.exceptions.RequestException as e:
+                print("[call_house_API] login exception: ", e)
 
         if self.server_need_login:
             if gl.get_value('MORE_LOG'):
@@ -367,30 +382,45 @@ class DeviceService():
         else:
             # resp = requests.get("http://" + gl.get_value("server_ip") + "/enteliweb/api/.bacnet/"+gl.get_value("server_sitename")+"/"+gl.get_value("server_device_number")+"/binary-value,"+object_reference+"/present-value?alt=json",
             #                     auth=HTTPBasicAuth("Basic", self.server_password_base64))
-            resp = requests.get("http://" + gl.get_value("server_ip") + "/enteliweb/api/.bacnet/"+gl.get_value("server_sitename")+"/"+gl.get_value("server_device_number")+"/binary-value,"+object_reference+"/present-value?alt=json",
-                                auth=HTTPBasicAuth(gl.get_value("server_username"), gl.get_value("server_password")))
-            if gl.get_value('MORE_LOG'):
-                print("get bacnet:", resp.status_code, resp.text)
-            resp_text = resp.text
-            if fake_json:
-                resp_text = '{"$base":"Enumerated","value":"Active"}'
-            resp_json = json.loads(resp_text)
-            if gl.get_value('MORE_LOG'):
-                print("resp_json $base:", resp_json["$base"])
+            '''
+            # This is to get object_reference's base. '''
+            try:
+                resp1 = self.resp_get.get("http://" + gl.get_value("server_ip") + "/enteliweb/api/.bacnet/"+gl.get_value("server_sitename")+"/"+gl.get_value("server_device_number")+"/binary-value,"+ object_reference +"/present-value?alt=json",
+                                    auth=HTTPBasicAuth(gl.get_value("server_username"), gl.get_value("server_password")),
+                                    cookies=self.response.cookies)
+                if gl.get_value('MORE_LOG'):
+                    print("get bacnet:", resp1.status_code, resp1.text)
+                resp_text = resp1.text
+                if fake_json:
+                    resp_text = '{"$base":"Enumerated","value":"Active"}'
+                resp_json = json.loads(resp_text)
+                if gl.get_value('MORE_LOG'):
+                    print("resp_json $base:", resp_json["$base"])
+            except requests.exceptions.RequestException as e:
+                self.server_need_login = True
+                print("[call_house_API] request Get exception: ", e)
             # resp2 = requests.put("http://" + gl.get_value("server_ip") + "/enteliweb/api/.bacnet/"+gl.get_value("server_sitename")+"/"+gl.get_value("server_device_number")+"/binary-value,"+object_reference+"/present-value?alt=json",
             #     json={
             #         "$base": resp_json["$base"],
             #         "value": api_value
             #     },
             #     auth=HTTPBasicAuth("Basic", self.server_password_base64))
-            resp2 = requests.put("http://" + gl.get_value("server_ip") + "/enteliweb/api/.bacnet/"+gl.get_value("server_sitename")+"/"+gl.get_value("server_device_number")+"/binary-value,"+object_reference+"/present-value?alt=json",
-                json={
-                    "$base": resp_json["$base"],
-                    "value": api_value
-                },
-                auth=HTTPBasicAuth(gl.get_value("server_username"), gl.get_value("server_password")))
-            if gl.get_value('MORE_LOG'):
-                print("put bacnet:", resp2.status_code, resp2.text)
+            '''
+            # Send the data to the web base on the info from previous "base". '''
+            try:
+                resp2 = self.resp_put.put("http://" + gl.get_value("server_ip") + "/enteliweb/api/.bacnet/"+gl.get_value("server_sitename")+"/"+gl.get_value("server_device_number")+"/binary-value,"+ object_reference +"/present-value?alt=json",
+                    json={
+                        "$base": resp_json["$base"],
+                        "value": api_value
+                    },
+                    auth=HTTPBasicAuth(gl.get_value("server_username"), gl.get_value("server_password")),
+                    cookies=self.response.cookies)
+                if gl.get_value('MORE_LOG'):
+                    print("put bacnet:", resp2.status_code, resp2.text)
+            except requests.exceptions.RequestException as e:
+                self.server_need_login = True
+                print("[call_house_API] request put exception: ", e)
+
 
     def call_iBeacon_sensor_info_API(self, sensorMap):
         rssi = sensorMap["data_rssi"]
@@ -430,12 +460,16 @@ class DeviceService():
                 print('callback_house_open_door server_password: '+server_password )
 
             object_reference = gl.get_object_reference( str(device.name).lower() )
-            print('callback_house_open_door object_reference: '+object_reference )
             if object_reference is not None:
-                api_value = "inactive"
-                if str(value) == "1":
-                    api_value = "active"
-                self.call_house_API(object_reference,api_value)
+                if gl.get_value('MORE_LOG'):
+                    print('callback_house_open_door object_reference: ' + object_reference)
+                if object_reference is not None:
+                    api_value = "inactive"
+                    if str(value) == "1":
+                        api_value = "active"
+                    self.call_house_API(object_reference, api_value)
+
+
 
     def callback_iBeacon_sensor_info(self, sensorMap):
         if gl.get_value('MORE_LOG'):
@@ -487,29 +521,11 @@ class DeviceService():
                 if gl.get_value('MORE_LOG'):
                     print("updateDeviceInfo color_value ok")
 
-    def callback_group_onoff(self,on_off, data, src_unicast_addr, dst_address_id):
-        transition_time_value = int(data[4], 16)
-        repeat_value = 5
-        ack = 0
-
-        device = self.getDeviceInfoData(src_unicast_addr)
+    def callback_group_onoff(self,on_off, address_id):
         if gl.get_value('MORE_LOG'):
-            print('callback_group_onoff device_name: ', device.name)
-            print('callback_group_onoff on_off: ', on_off )
-            print('callback_group_onoff src_unicast_addr: ', str(src_unicast_addr))
-            print('callback_group_onoff dst_address_id: ', str(dst_address_id))
-
-        time.sleep(1)
-        #temporary marked for debug
-        #group_info_data = self.setGroupOnOff(int(dst_address_id), on_off, transition_time_value, repeat_value, ack)
-        #if group_info_data.switch_state:
-        #    print('set group onoff on is ok')
-        #else:
-        #    print('set group onoff off is ok')
-
-
-        ''' Update the lastest state to database. '''
-        group = self.getGroupInfoData(dst_address_id)
+            print('callback_group_onoff on_off: ', on_off)
+            print('callback_group_onoff address_id: ', str(address_id))
+        group = self.getGroupInfoData(address_id)
         if on_off == 1:
             group.switch_state = True
         else:
@@ -518,12 +534,12 @@ class DeviceService():
         if gl.get_value('MORE_LOG'):
             print("updateGroupInfo on_off ok")
 
-        group2 = self.getGroup(dst_address_id)
+        group2 = self.getGroup(address_id)
         devices = [device for device in group2['device']
                    if device['inUse'] == True]
         for device in devices:
             if gl.get_value('MORE_LOG'):
-                print("device.id:" + str(device["id"]) )
+                print("device.id:" + str(device["id"]))
             device2 = self.getDeviceInfoData(device["id"])
             if device2 is not None:
                 if on_off == 1:
@@ -591,7 +607,7 @@ class DeviceService():
                 if gl.get_value('MORE_LOG'):
                     print("updateDeviceInfo temperature ok")
 
-    def callback_switch_onoff(self,on_off, data, src_unicast_addr, dst_address_id):
+    def callback_switch_onoff(self, on_off, data, src_unicast_addr, dst_address_id):
         transition_time_value = int(data[4], 16)
         repeat_value = 5
         ack = 0
@@ -4323,6 +4339,20 @@ class DeviceService():
                     'data': lc.last_cmd_resp_dict[data_key_ary[0]]
                     }
                 }
+
+
+
+    def enterdfu(self, id):
+        flagOfstatus = True
+
+        address_handle = self.getAddressHandle(id)
+        device = self.getDeviceInfoData(id)
+        if device is not None:
+
+            lc = self.getLsbuClient()
+
+            lc.publish_set(0, address_handle)
+            lc.enterDfuMode(id)
 
 
 class RespOpcode(object):

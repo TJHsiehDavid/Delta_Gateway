@@ -1957,7 +1957,7 @@ RESPONSE_LUT = {
     0xA5: {"object": AddrPublicationAddVirtualRsp, "name": "AddrPublicationAddVirtual"},
     0xA6: {"object": AddrPublicationRemoveRsp, "name": "AddrPublicationRemove"},
     0xAB: {"object": PacketSendRsp, "name": "PacketSend"},
-    0xAF: {"object": NetStateGetRsp, "name": "NetStateGet"},
+    #0xAF: {"object": NetStateGetRsp, "name": "NetStateGet"},
     0xD4: {"object": BankInfoGetRsp, "name": "BankInfoGet"},
     0xD6: {"object": StateGetRsp, "name": "StateGet"},
     0xE1: {"object": ModelPubAddrGetRsp, "name": "ModelPubAddrGet"},

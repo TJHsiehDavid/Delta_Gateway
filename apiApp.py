@@ -1671,6 +1671,8 @@ def energyLogUpdate():
                             'transitionTime': device['transitionTime'],
                             'repeat': device['repeat'],
                             'state': {
+                                'productId': str(device['state']['productId']),
+                                'ratio': str(device['state']['ratio']),
                                 'data': str(device['state']['data'])
                             }
                         }
@@ -2940,7 +2942,6 @@ def deviceMonitorStream():
 @apiApp.route("/test/<path:subpath>")
 def show_subpath_test(subpath):
     return render_template("/test/%s" % escape(subpath))
-
 
 
 

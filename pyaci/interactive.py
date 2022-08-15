@@ -274,8 +274,8 @@ class Interactive(object):
 
             if self.PRINT_ALL_EVENTS and event is not None:
                 # 处理client subscription数据
-                if isinstance(event, evt.MeshMessageReceivedSubscription):
-                #if(event._event_name == "MeshMessageReceivedSubscription"):
+                #if isinstance(event, evt.MeshMessageReceivedSubscription):
+                if event._opcode is evt.Event.MESH_MESSAGE_RECEIVED_SUBSCRIPTION:
                     unicast_address = event._data['src']
                     ttl = event._data['ttl']
                     act_length = event._data["actual_length"]
@@ -479,10 +479,10 @@ class Interactive(object):
 
                                 if gl.get_value('MORE_LOG'):
                                     print( "my ON_OFF: address_id:"+ str(dst_group_address_id)  )
-                                    print( "my ON_OFF: my_sub_group_list_type_map:"+ self.my_sub_group_list_type_map[ address_id ]  )
+                                    print( "my ON_OFF: my_sub_group_list_type_map:"+ self.my_sub_group_list_type_map[ dst_group_address_id ]  )
 
                                 if self.callback_group_onoff is not None and updateDeviceStatus:
-                                    self.callback_group_onoff(result_map["on_off"], data, result_map["src"], dst_group_address_id)
+                                    self.callback_group_onoff(result_map["on_off"], dst_group_address_id)
                                 else:
                                     if gl.get_value('MORE_LOG'):
                                         print("callback_group_onoff is None")
