@@ -21,6 +21,9 @@ global_dict["updateDeviceStatus"] = True
 #是否印出log(True:會印,False:不會印)(僅部分程式有使用此變數)
 global_dict["MORE_LOG"] = False
 
+#確認process是否開好了(only process can change.)
+global_dict["PROCESS_READY"] = False
+
 #藍芽指令的TTL
 global_dict["TTL"] = 8
 
@@ -36,6 +39,7 @@ def write_config_ini():
     config.set("DEFAULT", "PORT", str(global_dict["PORT"]))
     config.set("LOCAL_ADDRESS", "PROVISIONERADDRESS", str(global_dict["PROVISIONERADDRESS"]))
     config.set("LOCAL_ADDRESS", "MANUAL_CHANGED", str(global_dict["MANUAL_CHANGED"]))
+
     hd = open(sdk_dir + '/config.ini', "w")
     config.write(hd)
     hd.close()
@@ -61,6 +65,7 @@ def read_config_ini():
     set_value('PORT', config['DEFAULT'].getint('PORT'))
     set_value('PROVISIONERADDRESS', config['LOCAL_ADDRESS'].getint('PROVISIONERADDRESS'))
     set_value('MANUAL_CHANGED', config['LOCAL_ADDRESS'].getboolean('MANUAL_CHANGED'))
+
 
     device_config = ConfigParser()
     device_config.read(sdk_dir + '/device.ini')

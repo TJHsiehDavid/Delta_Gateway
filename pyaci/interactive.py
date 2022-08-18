@@ -272,7 +272,7 @@ class Interactive(object):
                 self.logger.info(text)
         else:
 
-            if self.PRINT_ALL_EVENTS and event is not None:
+            if self.PRINT_ALL_EVENTS and event is not None and gl.get_value('PROCESS_READY'):
                 # 处理client subscription数据
                 #if isinstance(event, evt.MeshMessageReceivedSubscription):
                 if event._opcode is evt.Event.MESH_MESSAGE_RECEIVED_SUBSCRIPTION:

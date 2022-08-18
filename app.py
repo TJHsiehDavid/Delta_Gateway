@@ -15,7 +15,8 @@ import globalvar as gl
 #要在其他py起來前執行讀取參數的動作
 gl.read_config_ini()
 gl.read_env()
-
+#確認process是否開好了(only process can change.)
+gl.set_value('PROCESS_READY', False)
 
 from flask import Flask, render_template, jsonify, request, Response, make_response
 from markupsafe import escape
@@ -57,9 +58,16 @@ socketio = SocketIO()
 socketio.init_app(app)
 service = DeviceService.get_instance()
 
+
 if __name__ == "__main__":
-    print("sys.argv:"+str(sys.argv))
-    app.run(host="0.0.0.0", port=Proerties.port)
+    print("sys.argv:" + str(sys.argv))
+    try:
+        gl.set_value('PROCESS_READY', True)
+        app.run(host="0.0.0.0", port=Proerties.port)
+    except Exception as e:
+        print('-------- app.py exception: ', e)
+        pass
+
 
 @socketio.on('stream',namespace='/webSocket/stream')
 def sensorWebSocketStream(data):
