@@ -35,7 +35,7 @@ from flask_socketio import SocketIO,emit
 2. CORS可以設定哪些網頁的名稱可以進來，如這邊就是"/*"代表所有都可以
 3 & 4. 大架構用blueprints來切割不同的模塊，如下：
        apiAppDefault所有創建出來的路徑都要加上"/"(因url_prefix) ： http://127.0.0.1:8088/apiAppDefault
-       apiApp有創建出來的路徑都要加上"/v2"(因url_prefix) : http://127.0.0.1:8088/v2/apiApp
+       apiApp有創建出來的路徑都要加上"/v3"(因url_prefix) : http://127.0.0.1:8088/v3/apiApp
     /flask
     |一 /apiAppDefault.py
     |一 /apiApp.py
@@ -45,7 +45,7 @@ from flask_socketio import SocketIO,emit
 app = Flask(__name__)
 cors = CORS(app, resources={r"/*": {"origins": "*"}})
 app.register_blueprint(apiAppDefault, url_prefix="/")
-app.register_blueprint(apiApp, url_prefix="/v2")
+app.register_blueprint(apiApp, url_prefix="/v3")
 
 #網頁架構中的設定，如：這app有secret key，有生命週期30天的設定
 app.config['SESSION_TYPE'] = 'filesystem'

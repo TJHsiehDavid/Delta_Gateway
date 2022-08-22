@@ -66,7 +66,6 @@ def read_config_ini():
     set_value('PROVISIONERADDRESS', config['LOCAL_ADDRESS'].getint('PROVISIONERADDRESS'))
     set_value('MANUAL_CHANGED', config['LOCAL_ADDRESS'].getboolean('MANUAL_CHANGED'))
 
-
     device_config = ConfigParser()
     device_config.read(sdk_dir + '/device.ini')
     set_value('server_ip', device_config['DEFAULT']['server_ip'])

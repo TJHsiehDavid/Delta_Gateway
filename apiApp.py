@@ -57,16 +57,16 @@ def showDoc():
 
 
 """
-- 訪問 : http://localhost:8088/version
+- 訪問 : http://localhost:8088/v3/version
 - 網頁 : 回傳回應到網頁
 """
 @apiApp.route("/version")
-def v2version():
+def v3version():
     result = {
         "status": "success",
         "code": 200,
         "message": "",
-        "payload": "2.0.0"
+        "payload": "3.0.0"
     }
     status_code = result["code"]
     if status_code == 200 :
