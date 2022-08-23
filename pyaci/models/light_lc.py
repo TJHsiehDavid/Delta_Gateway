@@ -92,7 +92,7 @@ class LightLCClient(Model):
         self.send(self.LIGHT_LC_ONOFF_GET)
         self.logger.info("Get Light LC OnOff")
 
-    def set_onoff(self, onoff, transition_time_ms=0, delay_ms=0, ack=True, repeat=1):
+    def set_onoff(self, mode, onoff, transition_time_ms=0, delay_ms=0, ack=True, repeat=1):
         message = bytearray()
         message += struct.pack("<BB", onoff, self._tid)
         if mode not in [0b0, 0b1]:

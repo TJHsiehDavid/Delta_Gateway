@@ -744,6 +744,7 @@ class SensorClient(Model):
 
     def __sensor_status_handler(self, opcode, message):
         dongleUnicastAddress = message.meta['src']
+        nodeUUID = message.meta['uuid']
         ttl = message.meta['ttl']
         if self.__debug:
             self.sensorRawData += str(time.time()) + "-" + '%04x' % dongleUnicastAddress + nodeUUID + '%02x' % ttl \

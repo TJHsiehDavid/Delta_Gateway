@@ -552,7 +552,7 @@ def setConfig():
                 gl.set_value("TTL",TTL)
                 service.setTTL(TTL)
             else:
-                print("new TTL is not digit:" + str(TTL))
+                print("new TTL is not digit:" + str(gl.global_dict['TTL']))
 
         gl.write_config_ini()
 
