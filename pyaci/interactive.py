@@ -344,7 +344,7 @@ class Interactive(object):
                         bloodPLow = int(data[16], 16)
                         oxygen = int(data[17], 16)
                         deviceAddress = '%04X' % (int(data[18], 16) << 8 | int(data[19], 16))
-                        msg = "unicastAddress:" + str(dongleUnicastAddress) \
+                        msg = "unicastAddress:" + str(unicast_address) \
                             + ", ttl:" + str(ttl) \
                             + ", SmartWatchBeacon, nc:" + ('佩戴' if nc == 1 else '离手') \
                             + ", sos:" + ('SOS' if sos == 1 else '保险') + ", walkingStep:" + str(step) \
