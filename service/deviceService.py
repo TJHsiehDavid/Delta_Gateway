@@ -4293,7 +4293,7 @@ class DeviceService():
                             print("get Lsbu composition data ok:")
                         else:
                             time.sleep(retrySleep)
-
+                    time.sleep(0.2)
                     ''' Get the power ratio.
                         Get the max mA and calculate the max Power walt. '''
                     if str(id) not in lc.deviceMaxPowerRatioDict:
@@ -4308,6 +4308,7 @@ class DeviceService():
                         else:
                             time.sleep(retrySleep)
 
+                    time.sleep(0.2)
                     ''' Get the energy log from device which is raw data. '''
                     data_key_ary = [str(id) + "Energy"]
                     self.clearRespData(data_key_ary, lc)
