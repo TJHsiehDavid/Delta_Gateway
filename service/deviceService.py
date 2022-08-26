@@ -776,9 +776,9 @@ class DeviceService():
             #將mesh database的資料送給local address
             self.provisioning = Provisioner(self.device, self.db)
 
-
-        self.removeAddressHandle()
-        self.removeDevkeyHandle()
+        # David marked for test (two line below)
+        #self.removeAddressHandle()
+        #self.removeDevkeyHandle()
 
         cmd.init_my_sub_group_list()
 
@@ -4155,7 +4155,8 @@ class DeviceService():
 
     def callReCallScene(self, scene_id, device_id_ary, transition_time=0, delay=0, is_open=True, repeat=1):
         sc = self.getSceneClient()
-        if is_open and device_id_ary[1] is not None:
+        # David: why need light should on (is_open = on) then can control.
+        if is_open or device_id_ary[1] is not None:
             address_handle = self.getAddressHandle(device_id_ary[1])
             sc.publish_set(0, address_handle)
         sc.sceneRecall(scene_id, transition_time_ms=transition_time, delay_ms=delay, ack=False, repeat=1)

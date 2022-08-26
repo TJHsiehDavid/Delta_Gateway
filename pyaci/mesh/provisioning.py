@@ -239,12 +239,14 @@ class Provisioner(ProvDevice):
 
         self.iaci.send(cmd.AddrLocalUnicastSet(self.__address, 1))
 
+        #David marked for test(''' inside is marked ''')
+        '''
         for key in self.prov_db.net_keys:
             self.iaci.send(cmd.SubnetAdd(key.index,
                                          key.key))
         for key in self.prov_db.app_keys:
             self.iaci.send(cmd.AppkeyAdd(key.index, key.bound_net_key, key.key))
-
+        '''
     def scan_start(self):
         """Starts scanning for unprovisioned beacons."""
         self.iaci.send(cmd.ScanStart())

@@ -1,7 +1,7 @@
-import os
 import sys
 # Command below is to Disable pyc file generate.
 sys.dont_write_bytecode = True
+import os
 from flask_cors import CORS
 from datetime import datetime,timedelta
 import time
