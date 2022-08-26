@@ -29,7 +29,8 @@
 # POSSIBILITY OF SUCH DAMAGE.
 
 import sys
-
+# Command below is to Disable pyc file generate.
+sys.dont_write_bytecode = True
 if sys.version_info < (3, 5):
     print(("ERROR: To use {} you need at least Python 3.5.\n" +
            "You are currently using Python {}.{}").format(sys.argv[0], *sys.version_info))
