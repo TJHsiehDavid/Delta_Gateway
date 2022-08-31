@@ -175,13 +175,15 @@ class DeviceService():
         self.server_need_login = True
         self.server_password_base64 = ""
 
-        self.response = None
+        self.response = requests.session()
+        '''
         self.resp_login = requests.Session()
         self.resp_login.mount('http://', HTTPAdapter(max_retries=3))
         self.resp_get = requests.Session()
         self.resp_get.mount('http://', HTTPAdapter(max_retries=3))
         self.resp_put = requests.Session()
         self.resp_put.mount('http://', HTTPAdapter(max_retries=3))
+        '''
 
     def clear_dataDao(self):
         if self.dataDao is not None:
@@ -353,49 +355,52 @@ class DeviceService():
         # Log in only need once, and it has been connected to the server, so when send command
         # like request.Get, Put... will not cause log out otherwise will occur log out everytime. '''
         if self.server_need_login:
-            self.response = None
+            self.response.cookies.clear()
             try:
                 server_password = gl.get_value("server_username")+":"+gl.get_value("server_password")
                 self.server_password_base64 = (base64.b64encode(server_password.encode("UTF-8"))).decode("UTF-8")
                 if gl.get_value('MORE_LOG'):
-                    print("server_password_base64", self.server_password_base64)
+                    print("[Sever API] server_password_base64: ", self.server_password_base64)
                 # resp = requests.get("http://" + gl.get_value("server_ip") + "/enteliweb/api/auth/basiclogin?alt=json",
                 #     auth=HTTPBasicAuth("Basic", self.server_password_base64))
-                self.response = self.resp_login.get("http://" + gl.get_value("server_ip") + "/enteliweb/api/auth/basiclogin?alt=json",
+                self.response = requests.get("http://" + gl.get_value("server_ip") + "/enteliweb/api/auth/basiclogin?alt=json",
                     auth=HTTPBasicAuth(gl.get_value("server_username"), gl.get_value("server_password")))
                 if gl.get_value('MORE_LOG'):
-                    print("get basiclogin:", self.response.status_code, self.response.text)
+                    print("[Sever API] get basiclogin:", self.response.status_code, self.response.text)
                 resp_text = self.response.text
-                if fake_json:
+                resp_json = json.loads(resp_text)
+                if fake_json or resp_json["value"] != "OK":
                     resp_text = '{"$base":"String","value":"OK","_csrfToken":"ZBKkZQFfGoawDn42Jg0OmxV4OQ4nFxH6UEMNnW3E"}'
                 resp_json = json.loads(resp_text)
                 if gl.get_value('MORE_LOG'):
-                    print("resp_json value:", resp_json["value"])
+                    print("[Sever API] resp_json value:", resp_json["value"])
                 if resp_json["value"] == "OK":
                     self.server_need_login = False
+                    gl.set_value('SERVER_LOGIN', True)
             except requests.exceptions.RequestException as e:
                 print("[call_house_API] login exception: ", e)
 
         if self.server_need_login:
             if gl.get_value('MORE_LOG'):
-                print("server_need_login")
+                gl.set_value('SERVER_LOGIN', False)
+                print("Server_need_login !!")
         else:
             # resp = requests.get("http://" + gl.get_value("server_ip") + "/enteliweb/api/.bacnet/"+gl.get_value("server_sitename")+"/"+gl.get_value("server_device_number")+"/binary-value,"+object_reference+"/present-value?alt=json",
             #                     auth=HTTPBasicAuth("Basic", self.server_password_base64))
             '''
             # This is to get object_reference's base. '''
             try:
-                resp1 = self.resp_get.get("http://" + gl.get_value("server_ip") + "/enteliweb/api/.bacnet/"+gl.get_value("server_sitename")+"/"+gl.get_value("server_device_number")+"/binary-value,"+ object_reference +"/present-value?alt=json",
+                resp1 = requests.get("http://" + gl.get_value("server_ip") + "/enteliweb/api/.bacnet/"+gl.get_value("server_sitename")+"/"+gl.get_value("server_device_number")+"/binary-value,"+ object_reference +"/present-value?alt=json",
                                     auth=HTTPBasicAuth(gl.get_value("server_username"), gl.get_value("server_password")),
                                     cookies=self.response.cookies)
                 if gl.get_value('MORE_LOG'):
-                    print("get bacnet:", resp1.status_code, resp1.text)
+                    print("[Sever API] get bacnet:", resp1.status_code, resp1.text)
                 resp_text = resp1.text
                 if fake_json:
                     resp_text = '{"$base":"Enumerated","value":"Active"}'
                 resp_json = json.loads(resp_text)
                 if gl.get_value('MORE_LOG'):
-                    print("resp_json $base:", resp_json["$base"])
+                    print("[Sever API] resp_json $base:", resp_json["$base"])
             except requests.exceptions.RequestException as e:
                 self.server_need_login = True
                 print("[call_house_API] request Get exception: ", e)
@@ -408,7 +413,7 @@ class DeviceService():
             '''
             # Send the data to the web base on the info from previous "base". '''
             try:
-                resp2 = self.resp_put.put("http://" + gl.get_value("server_ip") + "/enteliweb/api/.bacnet/"+gl.get_value("server_sitename")+"/"+gl.get_value("server_device_number")+"/binary-value,"+ object_reference +"/present-value?alt=json",
+                resp2 = requests.put("http://" + gl.get_value("server_ip") + "/enteliweb/api/.bacnet/"+gl.get_value("server_sitename")+"/"+gl.get_value("server_device_number")+"/binary-value,"+ object_reference +"/present-value?alt=json",
                     json={
                         "$base": resp_json["$base"],
                         "value": api_value
@@ -416,7 +421,7 @@ class DeviceService():
                     auth=HTTPBasicAuth(gl.get_value("server_username"), gl.get_value("server_password")),
                     cookies=self.response.cookies)
                 if gl.get_value('MORE_LOG'):
-                    print("put bacnet:", resp2.status_code, resp2.text)
+                    print("[Sever API] put bacnet:", resp2.status_code, resp2.text)
             except requests.exceptions.RequestException as e:
                 self.server_need_login = True
                 print("[call_house_API] request put exception: ", e)

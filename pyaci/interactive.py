@@ -415,7 +415,7 @@ class Interactive(object):
                     elif act_length == 4 and int(data[0], 16) == 82:
                         open_door = int(data[3], 16)
                         self.house_open_door_time[str(unicast_address)] = time.time()
-                        if str(unicast_address) in self.house_open_door:
+                        if str(unicast_address) in self.house_open_door and gl.get_value('SERVER_LOGIN'):
                             if self.house_open_door[str(unicast_address)] != open_door:
                                 self.house_open_door[str(unicast_address)] = open_door
                                 result_map["open_door"] = open_door
