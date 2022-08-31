@@ -360,20 +360,20 @@ class DeviceService():
                 server_password = gl.get_value("server_username")+":"+gl.get_value("server_password")
                 self.server_password_base64 = (base64.b64encode(server_password.encode("UTF-8"))).decode("UTF-8")
                 if gl.get_value('MORE_LOG'):
-                    print("[Sever API] server_password_base64: ", self.server_password_base64)
+                    print("[Server API] server_password_base64: ", self.server_password_base64)
                 # resp = requests.get("http://" + gl.get_value("server_ip") + "/enteliweb/api/auth/basiclogin?alt=json",
                 #     auth=HTTPBasicAuth("Basic", self.server_password_base64))
                 self.response = requests.get("http://" + gl.get_value("server_ip") + "/enteliweb/api/auth/basiclogin?alt=json",
                     auth=HTTPBasicAuth(gl.get_value("server_username"), gl.get_value("server_password")))
                 if gl.get_value('MORE_LOG'):
-                    print("[Sever API] get basiclogin:", self.response.status_code, self.response.text)
+                    print("[Server API] get basiclogin:", self.response.status_code, self.response.text)
                 resp_text = self.response.text
                 resp_json = json.loads(resp_text)
                 if fake_json or resp_json["value"] != "OK":
                     resp_text = '{"$base":"String","value":"OK","_csrfToken":"ZBKkZQFfGoawDn42Jg0OmxV4OQ4nFxH6UEMNnW3E"}'
                 resp_json = json.loads(resp_text)
                 if gl.get_value('MORE_LOG'):
-                    print("[Sever API] resp_json value:", resp_json["value"])
+                    print("[Server API] resp_json value:", resp_json["value"])
                 if resp_json["value"] == "OK":
                     self.server_need_login = False
                     gl.set_value('SERVER_LOGIN', True)
@@ -394,13 +394,13 @@ class DeviceService():
                                     auth=HTTPBasicAuth(gl.get_value("server_username"), gl.get_value("server_password")),
                                     cookies=self.response.cookies)
                 if gl.get_value('MORE_LOG'):
-                    print("[Sever API] get bacnet:", resp1.status_code, resp1.text)
+                    print("[Server API] get bacnet:", resp1.status_code, resp1.text)
                 resp_text = resp1.text
                 if fake_json:
                     resp_text = '{"$base":"Enumerated","value":"Active"}'
                 resp_json = json.loads(resp_text)
                 if gl.get_value('MORE_LOG'):
-                    print("[Sever API] resp_json $base:", resp_json["$base"])
+                    print("[Server API] resp_json $base:", resp_json["$base"])
             except requests.exceptions.RequestException as e:
                 self.server_need_login = True
                 print("[call_house_API] request Get exception: ", e)
@@ -421,7 +421,7 @@ class DeviceService():
                     auth=HTTPBasicAuth(gl.get_value("server_username"), gl.get_value("server_password")),
                     cookies=self.response.cookies)
                 if gl.get_value('MORE_LOG'):
-                    print("[Sever API] put bacnet:", resp2.status_code, resp2.text)
+                    print("[Server API] put bacnet:", resp2.status_code, resp2.text)
             except requests.exceptions.RequestException as e:
                 self.server_need_login = True
                 print("[call_house_API] request put exception: ", e)
